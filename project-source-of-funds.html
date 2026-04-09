@@ -1,170 +1,873 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cross-Chain Source of Funds Tracing</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cross-Chain Blockchain Investigation Case Study</title>
+  <style>
+    :root {
+      --bg: #090f17;
+      --bg-2: #0c1420;
+      --panel: #101927;
+      --panel-2: #142133;
+      --line: rgba(255,255,255,0.08);
+      --text: #f3f7fc;
+      --muted: #aab7ca;
+      --muted-2: #8ea0b7;
+      --accent: #4ea1ff;
+      --accent-soft: rgba(78,161,255,0.12);
+      --green: #49d18f;
+      --green-soft: rgba(73,209,143,0.12);
+      --yellow: #ffd35c;
+      --yellow-soft: rgba(255,211,92,0.12);
+      --red: #ff7c86;
+      --red-soft: rgba(255,124,134,0.12);
+      --violet: #b479ff;
+      --shadow: 0 18px 44px rgba(0,0,0,0.34);
+      --radius: 18px;
+      --max: 1220px;
+    }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(78,161,255,0.14), transparent 22%),
+        radial-gradient(circle at 20% 0%, rgba(180,121,255,0.08), transparent 18%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
 
-<style>
-body{
-    margin:0;
-    font-family:'Inter',sans-serif;
-    background:#08111f;
-    color:#f5f7fb;
-    padding:40px 20px;
-    line-height:1.7;
-}
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-.container{
-    max-width:900px;
-    margin:auto;
-}
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
 
-h1,h2,h3{
-    font-family:'Manrope',sans-serif;
-}
+    .hero {
+      padding: 44px 0 28px;
+    }
 
-h1{
-    font-size:38px;
-    margin-bottom:10px;
-}
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(20,33,51,0.96) 0%, rgba(16,25,39,0.98) 100%);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
 
-.intro{
-    color:#9fb0c9;
-    margin-bottom:25px;
-    font-size:17px;
-}
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at 70% 35%, black 18%, transparent 72%);
+      pointer-events: none;
+    }
 
-.card{
-    background:#111b30;
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:16px;
-    padding:22px;
-    margin:18px 0;
-}
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(78,161,255,0.24);
+      background: var(--accent-soft);
+      color: #c4ddff;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
 
-h2{
-    font-size:20px;
-    margin-bottom:10px;
-    border-bottom:1px solid rgba(255,255,255,0.08);
-    padding-bottom:6px;
-}
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
 
-p, li{
-    color:#cbd5e1;
-    font-size:16px;
-}
+    h1, h2, h3, h4 { line-height: 1.15; }
+    h1 {
+      font-size: clamp(34px, 4.7vw, 54px);
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
 
-ul{
-    padding-left:18px;
-}
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
 
-.tools{
-    color:#76a7ff;
-    font-weight:600;
-}
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 760px;
+      margin-bottom: 14px;
+    }
 
-.flow{
-    background:#0f182c;
-    border-radius:16px;
-    padding:20px;
-    text-align:center;
-    font-weight:600;
-    color:#dbe6f6;
-    line-height:2;
-    border:1px solid rgba(255,255,255,0.08);
-}
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
 
-.highlight{
-    color:#ffffff;
-    font-weight:600;
-}
-</style>
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #dbe6f8;
+      font-size: 13px;
+    }
 
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .meta-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+
+    .meta-box span {
+      display: block;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+
+    .meta-box strong {
+      display: block;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .sidebar h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #d8e4f7;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar a:hover {
+      text-decoration: none;
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line);
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .card h2 {
+      font-size: 28px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .grid-2, .visual-grid, .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3, .flag-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .tile {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 18px;
+    }
+
+    .tile small {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #b8c7db;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+
+    .tile strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .tile p { margin: 0; font-size: 15px; }
+
+    .metric {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 132px;
+    }
+
+    .metric .value {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-top: 6px;
+    }
+
+    .metric .sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .flow-step {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #ebf2fd;
+      font-size: 14px;
+    }
+
+    .flow-arrow {
+      align-self: center;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .section-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #08111a;
+    }
+
+    .blue { background: var(--accent); }
+    .green { background: var(--green); }
+    .yellow { background: var(--yellow); }
+    .red { background: var(--red); }
+    .violet { background: var(--violet); }
+
+    .evidence-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #dce7f8;
+    }
+
+    .pill.green { background: var(--green-soft); color: #c9f7e0; border-color: rgba(73,209,143,0.22); }
+    .pill.yellow { background: var(--yellow-soft); color: #fff0be; border-color: rgba(255,211,92,0.22); }
+    .pill.red { background: var(--red-soft); color: #ffd4d8; border-color: rgba(255,124,134,0.22); }
+
+    .image-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .image-wrap {
+      position: relative;
+      background: #0a1018;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .image-wrap img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .image-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(10,15,23,0.86);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #d8e6fb;
+      font-size: 12px;
+    }
+
+    .image-body {
+      padding: 18px 18px 20px;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+
+    .timeline-time {
+      color: #dce7f8;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .timeline-text {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .flag {
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .flag.high { background: var(--red-soft); border-color: rgba(255,124,134,0.22); }
+    .flag.medium { background: var(--yellow-soft); border-color: rgba(255,211,92,0.22); }
+    .flag.low { background: var(--green-soft); border-color: rgba(73,209,143,0.22); }
+
+    .flag .level {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .flag h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .flag p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .conclusion-box {
+      border: 1px solid rgba(73,209,143,0.22);
+      background: linear-gradient(180deg, rgba(73,209,143,0.12) 0%, rgba(255,255,255,0.02) 100%);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 8px 0 50px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(78,161,255,0.18), rgba(78,161,255,0.08));
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.03);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .layout, .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
+        grid-template-columns: 1fr;
+      }
+      .sidebar { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-card, .card, .sidebar { padding: 18px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+      .card h2 { font-size: 24px; }
+      .flow { flex-direction: column; align-items: flex-start; }
+      .flow-arrow { transform: rotate(90deg); }
+      .timeline-item { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Chain Analysis Style Investigation Report</div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Cross-Chain Blockchain Investigation Case Study</h1>
+            <p>
+              End-to-end tracing of funds across Solana and Ethereum, following movement through Wormhole and Across Protocol into KuCoin-linked deposit wallets using transaction-level evidence, bridge interaction review, time correlation, and value consistency.
+            </p>
+            <p>
+              This report presents the investigation in a structured format suitable for portfolio presentation, highlighting methodology, core evidence, risk indicators, and final analytical conclusion.
+            </p>
+            <div class="tag-row">
+              <div class="tag">Source of Funds</div>
+              <div class="tag">Bridge Tracing</div>
+              <div class="tag">Exchange Attribution</div>
+              <div class="tag">AML Investigation</div>
+            </div>
+          </div>
+          <div class="meta-grid">
+            <div class="meta-box">
+              <span>Case Type</span>
+              <strong>Cross-Chain Fund Flow Investigation</strong>
+            </div>
+            <div class="meta-box">
+              <span>Networks</span>
+              <strong>Solana / Ethereum</strong>
+            </div>
+            <div class="meta-box">
+              <span>Bridge Infrastructure</span>
+              <strong>Wormhole / Across Protocol</strong>
+            </div>
+            <div class="meta-box">
+              <span>Final Attribution</span>
+              <strong>KuCoin Deposit Addresses</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="container">
+    <section class="layout">
+      <aside class="sidebar">
+        <h3>Report Navigation</h3>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#overview">Overview</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#source-of-funds">Source of Funds</a>
+        <a href="#deposit-addresses">Deposit Addresses</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#risk-flags">Risk Flags</a>
+        <a href="#visual-analysis">Screenshots</a>
+        <a href="#conclusion">Conclusion</a>
+      </aside>
 
-<h1>Cross-Chain Source of Funds Tracing</h1>
+      <div class="content">
+        <section id="dashboard" class="card">
+          <h2>Investigation Dashboard</h2>
+          <p>
+            High-level summary of the case structure, bridge behavior, and destination attribution.
+          </p>
+          <div class="metrics-grid">
+            <div class="tile metric">
+              <small>Upstream Funding</small>
+              <div class="value">1</div>
+              <div class="sub">Initial identified Binance hot wallet source</div>
+            </div>
+            <div class="tile metric">
+              <small>Cross-Chain Bridges</small>
+              <div class="value">2</div>
+              <div class="sub">Wormhole and Across Protocol observed in the traced path</div>
+            </div>
+            <div class="tile metric">
+              <small>Final Deposit Wallets</small>
+              <div class="value">3</div>
+              <div class="sub">Repeated KuCoin-linked destination addresses identified</div>
+            </div>
+            <div class="tile metric">
+              <small>Core Evidence Pillars</small>
+              <div class="value">4</div>
+              <div class="sub">Flow continuity, timing, value matching, and common source attribution</div>
+            </div>
+          </div>
+          <div class="evidence-strip">
+            <div class="pill green">Continuous fund flow</div>
+            <div class="pill green">Bridge event alignment</div>
+            <div class="pill yellow">Cross-chain obfuscation pattern</div>
+            <div class="pill red">Exchange deposit routing</div>
+          </div>
+        </section>
 
-<p class="intro">
-Tracing digital asset movement across Solana and Ethereum bridge infrastructure to determine the earliest identifiable funding source behind exchange-linked deposits.
-</p>
+        <section id="overview" class="card">
+          <h2>Executive Overview</h2>
+          <p>
+            This case study documents a structured blockchain investigation in which funds were traced backward from KuCoin-linked destination wallets through intermediary recipient wallets, Across Protocol bridge activity, and Wormhole bridge interaction to an upstream source path beginning from a Binance hot wallet.
+          </p>
+          <p>
+            The analytical objective was to determine whether the destination deposits represented isolated transfers or were part of a continuous, verifiable, cross-chain flow. The evidence supports the latter conclusion.
+          </p>
+          <div class="grid-2">
+            <div class="tile">
+              <small>Primary Finding</small>
+              <strong>End-to-End Traceability</strong>
+              <p>The fund flow remains visible from upstream funding through bridge infrastructure into exchange-linked deposits without a break in the traced route.</p>
+            </div>
+            <div class="tile">
+              <small>Analytical Outcome</small>
+              <strong>Coordinated Routing Pattern</strong>
+              <p>The behavior observed across bridges, receiver wallets, and deposits aligns with structured routing rather than unrelated wallet activity.</p>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Objective</h2>
-<p>
-To determine the origin of funds for transactions that ultimately deposited into exchange wallets by tracing the transaction path backward through bridge infrastructure and intermediary wallets.
-</p>
-</div>
+        <section id="methodology" class="card">
+          <h2>Methodology</h2>
+          <p>
+            The case was built using backward tracing, post-bridge recipient analysis, final deposit grouping, and transaction-level consistency checks across multiple blockchain stages.
+          </p>
+          <div class="section-list">
+            <div class="list-item">
+              <div class="icon blue">1</div>
+              <div>
+                <h3>Backward Tracing</h3>
+                <p>Deposits were traced back through intermediary Ethereum wallets, Across Protocol, and Wormhole to locate the last visible upstream funding path.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon green">2</div>
+              <div>
+                <h3>Bridge Interaction Review</h3>
+                <p>Bridge recipient and routing behavior were assessed to confirm that funds entered, moved through, and exited bridge infrastructure in a coherent sequence.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon yellow">3</div>
+              <div>
+                <h3>Correlation Analysis</h3>
+                <p>Timestamps, amounts, and wallet transitions were compared across each stage to test whether the same funds could be followed continuously.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon violet">4</div>
+              <div>
+                <h3>Exchange Attribution</h3>
+                <p>Repeated destination addresses were grouped and interpreted as KuCoin-linked deposit endpoints based on final transfer behavior and destination reuse.</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Tooling Used</h2>
-<p class="tools">
-Etherscan · Arbiscan · Solscan · Arkham Intelligence · Wormhole Explorer · Manual transaction analysis
-</p>
-</div>
+        <section id="source-of-funds" class="card">
+          <h2>Source of Funds Determination</h2>
+          <p>
+            The traced upstream path begins from a Binance hot wallet, passes through a sequence of Solana wallets, enters Wormhole, continues to Ethereum via a common funding wallet, and then moves through Across Protocol before reaching final deposit endpoints.
+          </p>
+          <div class="flow">
+            <div class="flow-step">Binance Hot Wallet</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">FHUKz...</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">DYFK...</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">DFY3...</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Wormhole</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">0x82fe...</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Across Protocol</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">KuCoin Deposits</div>
+          </div>
+          <div class="grid-2">
+            <div class="tile">
+              <small>Initial Identified Source</small>
+              <strong>Binance Hot Wallet</strong>
+              <p>The first visible source in the traced route is a Binance hot wallet that funded the subsequent chain of intermediary wallets before bridge entry.</p>
+            </div>
+            <div class="tile">
+              <small>Common Ethereum Funding Point</small>
+              <strong>0x82fe8720...</strong>
+              <p>Multiple receiver wallets converge back to this address prior to Across Protocol interaction, supporting common-source attribution.</p>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Methodology</h2>
-<ul>
-<li>Identified final recipient deposit addresses linked to exchange infrastructure.</li>
-<li>Traced transaction flow backward through <span class="highlight">Across Protocol</span> and <span class="highlight">Wormhole bridge</span>.</li>
-<li>Analyzed intermediary wallets across both Ethereum and Solana networks.</li>
-<li>Verified transaction continuity using timestamp alignment and value matching.</li>
-<li>Confirmed end-to-end fund flow from source to final deposit destination.</li>
-</ul>
-</div>
+        <section id="deposit-addresses" class="card">
+          <h2>Deposit Address Identification</h2>
+          <p>
+            Final destination addresses were identified by isolating Across Protocol interactions, reviewing post-bridge distributions, and grouping repeated endpoint usage consistent with exchange deposit routing.
+          </p>
+          <div class="grid-3">
+            <div class="tile">
+              <small>Deposit Address 1</small>
+              <strong>0x57b3fa2a...90982</strong>
+              <p>Observed as a repeated final recipient after intermediary post-bridge activity.</p>
+            </div>
+            <div class="tile">
+              <small>Deposit Address 2</small>
+              <strong>0x9b8275df...16a5f</strong>
+              <p>Receives repeated structured transfers following bridge-linked wallet movement.</p>
+            </div>
+            <div class="tile">
+              <small>Deposit Address 3</small>
+              <strong>0xF5d8396E...F4fde</strong>
+              <p>Appears as a final destination endpoint after intermediary routing and timing alignment.</p>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Transaction Flow Summary</h2>
+        <section id="evidence" class="card">
+          <h2>Evidence</h2>
+          <p>
+            The linkage between source, bridge movements, and final deposit endpoints is supported by multiple independent indicators. Together, they form a strong evidentiary basis for the case conclusion.
+          </p>
 
-<div class="flow">
-Binance Hot Wallet<br>
-↓<br>
-Intermediate Solana Wallets<br>
-↓<br>
-Wormhole Bridge<br>
-↓<br>
-Ethereum Wallet (Post-Bridge)<br>
-↓<br>
-Across Protocol<br>
-↓<br>
-Intermediate Recipient Wallets<br>
-↓<br>
-KuCoin Deposit Addresses
-</div>
+          <div class="section-list">
+            <div class="list-item">
+              <div class="icon blue">A</div>
+              <div>
+                <h3>Continuous Fund Flow</h3>
+                <p>Funds can be followed step by step from upstream source through bridge infrastructure to final exchange-linked deposits without a visible interruption in the traced path.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon green">B</div>
+              <div>
+                <h3>Time Correlation</h3>
+                <p>Bridge interactions and subsequent deposits occur within close time windows, supporting real-time routing of the same funds rather than unrelated later transactions.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon yellow">C</div>
+              <div>
+                <h3>Value Matching</h3>
+                <p>Amounts remain consistent across source, bridge, and final destination stages, strengthening the continuity assessment and lowering the chance of false linkage.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon violet">D</div>
+              <div>
+                <h3>Common Source Attribution</h3>
+                <p>Receiver wallets traced backward to the same upstream Ethereum funding address indicate coordinated control or a shared funding origin.</p>
+              </div>
+            </div>
+          </div>
 
-</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-time">Stage 1</div>
+              <div class="timeline-text">Upstream funding observed from a Binance hot wallet into intermediary Solana wallets before Wormhole bridge activity.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">Stage 2</div>
+              <div class="timeline-text">Funds cross into Ethereum and converge through a common funding address prior to Across Protocol interaction.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-time">Stage 3</div>
+              <div class="timeline-text">Across Protocol routing distributes funds through receiver wallets, which then transfer to KuCoin-linked deposit endpoints.</div>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Key Findings</h2>
-<p>
-The transaction flow demonstrated a continuous and traceable path from a <span class="highlight">Binance hot wallet</span>, through multiple intermediary wallets on Solana, into the Wormhole bridge, then across Ethereum via Across Protocol, and finally into identified <span class="highlight">KuCoin deposit addresses</span>.
-</p>
-</div>
+        <section id="risk-flags" class="card">
+          <h2>Risk Flags</h2>
+          <p>
+            The following analytical flags are relevant from an AML, transaction monitoring, and blockchain investigation perspective.
+          </p>
+          <div class="flag-grid">
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Cross-Chain Routing</h4>
+              <p>Movement across Wormhole and Across Protocol increases tracing complexity and may indicate an attempt to fragment visibility across networks.</p>
+            </div>
+            <div class="flag high">
+              <div class="level">High</div>
+              <h4>Exchange Deposit Convergence</h4>
+              <p>Final convergence into exchange-linked deposit wallets is a key risk indicator because it can signal an attempt to cash out, consolidate, or further layer funds.</p>
+            </div>
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Structured Intermediary Distribution</h4>
+              <p>Use of multiple recipient and intermediary wallets before final deposit may reflect deliberate routing intended to complicate straightforward attribution.</p>
+            </div>
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Rapid Timing Between Stages</h4>
+              <p>Short intervals between bridge execution and final deposits support continuity, but also suggest coordinated execution rather than casual user behavior.</p>
+            </div>
+            <div class="flag low">
+              <div class="level">Low</div>
+              <h4>Strong Trace Continuity</h4>
+              <p>From an evidentiary standpoint, the case benefits from clear continuity, which reduces analytical uncertainty even though it does not remove behavioral risk.</p>
+            </div>
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Repeated Destination Usage</h4>
+              <p>Reuse of the same final deposit addresses across multiple routed transfers reinforces exchange attribution and suggests operational consistency.</p>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Evidence Basis</h2>
-<p>
-The conclusion was supported by consistent transaction flow, matching transfer values across each stage, aligned timestamps, repeated interaction patterns with bridge protocols, and final transfers into known exchange deposit addresses.
-</p>
-</div>
+        <section id="visual-analysis" class="card">
+          <h2>Screenshots & Visual Analysis</h2>
+          <p>
+            The screenshots below are integrated as formal exhibits to support the narrative of source tracing, bridge linkage, and final deposit attribution.
+          </p>
+          <div class="visual-grid">
+            <div class="card image-card">
+              <div class="image-wrap">
+                <div class="image-badge">Exhibit A · Source Path</div>
+                <img src="Source of fund-chart.png" alt="Source of funds chart" />
+              </div>
+              <div class="image-body">
+                <h3>Source of Funds Flow</h3>
+                <p class="caption">
+                  This exhibit shows the wider cross-chain route from upstream wallet activity through Wormhole, Ethereum funding, Across Protocol routing, and final exchange-linked endpoints.
+                </p>
+              </div>
+            </div>
+            <div class="card image-card">
+              <div class="image-wrap">
+                <div class="image-badge">Exhibit B · Deposit Linkage</div>
+                <img src="Deposit address-chart.png" alt="Deposit address chart" />
+              </div>
+              <div class="image-body">
+                <h3>Deposit Address Mapping</h3>
+                <p class="caption">
+                  This exhibit isolates the post-bridge phase and highlights how intermediary wallets route funds into KuCoin-linked deposit addresses.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<div class="card">
-<h2>Outcome & Relevance</h2>
-<p>
-This case demonstrates the ability to trace source of funds across multiple blockchain networks and bridge infrastructure, supporting AML investigations, transaction monitoring processes, and compliance validation in complex digital asset environments.
-</p>
-</div>
+        <section id="conclusion" class="card">
+          <h2>Conclusion</h2>
+          <p>
+            The investigation supports a coherent end-to-end linkage between the upstream funding source, the bridge infrastructure, intermediary recipient wallets, and the final KuCoin-linked deposit addresses.
+          </p>
+          <p>
+            The case is strengthened by four key evidentiary pillars: uninterrupted fund flow, close timing alignment, value consistency, and common source attribution. These factors collectively support the conclusion that the observed deposits are part of a continuous routed path rather than unrelated blockchain events.
+          </p>
+          <div class="conclusion-box">
+            <h3>Analytical Conclusion</h3>
+            <p>
+              Based on the reconstructed path and supporting transaction behavior, the final deposit wallets can be reasonably linked to the traced source flow through cross-chain infrastructure and intermediary routing. This makes the case suitable as a portfolio example of practical blockchain investigation, transaction monitoring, and AML-focused analysis.
+            </p>
+          </div>
+        </section>
+      </div>
+    </section>
 
-</div>
-
+    <div class="footer-nav">
+      <a class="btn secondary" href="index.html">← Back to Portfolio</a>
+      <a class="btn" href="#dashboard">Back to Top ↑</a>
+    </div>
+  </div>
 </body>
 </html>
