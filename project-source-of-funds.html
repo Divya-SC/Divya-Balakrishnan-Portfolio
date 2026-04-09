@@ -1,63 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cross-Chain Source of Funds Tracing</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: #ffffff;
-      margin: 0;
-      padding: 40px 20px;
-      line-height: 1.7;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      background: #111a2e;
-      padding: 30px;
-      border-radius: 14px;
-    }
-    h1 {
-      color: #76a7ff;
-      margin-bottom: 20px;
-    }
-    p {
-      color: #d2d9e6;
-    }
-    a {
-      color: #76a7ff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .back {
-      display: inline-block;
-      margin-top: 25px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Cross-Chain Source of Funds Tracing</h1>
-    <p>
-      This project focused on tracing fund movement across Solana and Ethereum bridge infrastructure
-      to determine the earliest identifiable source of funds behind exchange-linked deposits.
-    </p>
-    <p>
-      The analysis involved reviewing bridge interactions, wallet movements, destination flows,
-      and transaction continuity across multiple blockchain environments.
-    </p>
-    <p>
-      The goal was to build a structured view of how funds moved from their origin through bridge
-      activity and into final deposit destinations.
-    </p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cross-Chain Source of Funds Tracing</title>
 
-    <a class="back" href="index.html">← Back to Portfolio</a>
-  </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:#08111f;
+    color:#f5f7fb;
+    padding:40px 20px;
+    line-height:1.7;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+h1,h2,h3{
+    font-family:'Manrope',sans-serif;
+}
+
+h1{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.intro{
+    color:#9fb0c9;
+    margin-bottom:25px;
+    font-size:17px;
+}
+
+.card{
+    background:#111b30;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:22px;
+    margin:18px 0;
+}
+
+h2{
+    font-size:20px;
+    margin-bottom:10px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    padding-bottom:6px;
+}
+
+p, li{
+    color:#cbd5e1;
+    font-size:16px;
+}
+
+ul{
+    padding-left:18px;
+}
+
+.tools{
+    color:#76a7ff;
+    font-weight:600;
+}
+
+.flow{
+    background:#0f182c;
+    border-radius:16px;
+    padding:20px;
+    text-align:center;
+    font-weight:600;
+    color:#dbe6f6;
+    line-height:2;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.highlight{
+    color:#ffffff;
+    font-weight:600;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Cross-Chain Source of Funds Tracing</h1>
+
+<p class="intro">
+Tracing digital asset movement across Solana and Ethereum bridge infrastructure to determine the earliest identifiable funding source behind exchange-linked deposits.
+</p>
+
+<div class="card">
+<h2>Objective</h2>
+<p>
+To determine the origin of funds for transactions that ultimately deposited into exchange wallets by tracing the transaction path backward through bridge infrastructure and intermediary wallets.
+</p>
+</div>
+
+<div class="card">
+<h2>Tooling Used</h2>
+<p class="tools">
+Etherscan · Arbiscan · Solscan · Arkham Intelligence · Wormhole Explorer · Manual transaction analysis
+</p>
+</div>
+
+<div class="card">
+<h2>Methodology</h2>
+<ul>
+<li>Identified final recipient deposit addresses linked to exchange infrastructure.</li>
+<li>Traced transaction flow backward through <span class="highlight">Across Protocol</span> and <span class="highlight">Wormhole bridge</span>.</li>
+<li>Analyzed intermediary wallets across both Ethereum and Solana networks.</li>
+<li>Verified transaction continuity using timestamp alignment and value matching.</li>
+<li>Confirmed end-to-end fund flow from source to final deposit destination.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Transaction Flow Summary</h2>
+
+<div class="flow">
+Binance Hot Wallet<br>
+↓<br>
+Intermediate Solana Wallets<br>
+↓<br>
+Wormhole Bridge<br>
+↓<br>
+Ethereum Wallet (Post-Bridge)<br>
+↓<br>
+Across Protocol<br>
+↓<br>
+Intermediate Recipient Wallets<br>
+↓<br>
+KuCoin Deposit Addresses
+</div>
+
+</div>
+
+<div class="card">
+<h2>Key Findings</h2>
+<p>
+The transaction flow demonstrated a continuous and traceable path from a <span class="highlight">Binance hot wallet</span>, through multiple intermediary wallets on Solana, into the Wormhole bridge, then across Ethereum via Across Protocol, and finally into identified <span class="highlight">KuCoin deposit addresses</span>.
+</p>
+</div>
+
+<div class="card">
+<h2>Evidence Basis</h2>
+<p>
+The conclusion was supported by consistent transaction flow, matching transfer values across each stage, aligned timestamps, repeated interaction patterns with bridge protocols, and final transfers into known exchange deposit addresses.
+</p>
+</div>
+
+<div class="card">
+<h2>Outcome & Relevance</h2>
+<p>
+This case demonstrates the ability to trace source of funds across multiple blockchain networks and bridge infrastructure, supporting AML investigations, transaction monitoring processes, and compliance validation in complex digital asset environments.
+</p>
+</div>
+
+</div>
+
 </body>
 </html>
