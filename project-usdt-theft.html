@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>USDT Theft & Exchange Attribution Analysis</title>
+  <style>
+    :root {
+      --bg: #090f17;
+      --bg-2: #0c1420;
+      --panel: #101927;
+      --panel-2: #142133;
+      --line: rgba(255,255,255,0.08);
+      --text: #f3f7fc;
+      --muted: #aab7ca;
+      --muted-2: #8ea0b7;
+      --accent: #4ea1ff;
+      --accent-soft: rgba(78,161,255,0.12);
+      --green: #49d18f;
+      --green-soft: rgba(73,209,143,0.12);
+      --yellow: #ffd35c;
+      --yellow-soft: rgba(255,211,92,0.12);
+      --red: #ff7c86;
+      --red-soft: rgba(255,124,134,0.12);
+      --violet: #b479ff;
+      --shadow: 0 18px 44px rgba(0,0,0,0.34);
+      --radius: 18px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(78,161,255,0.14), transparent 22%),
+        radial-gradient(circle at 20% 0%, rgba(180,121,255,0.08), transparent 18%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 44px 0 28px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(20,33,51,0.96) 0%, rgba(16,25,39,0.98) 100%);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at 70% 35%, black 18%, transparent 72%);
+      pointer-events: none;
+    }
+
+    h1, h2, h3, h4 { line-height: 1.15; }
+    h1 {
+      font-size: clamp(34px, 4.7vw, 54px);
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 760px;
+      margin-bottom: 14px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #dbe6f8;
+      font-size: 13px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .meta-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+
+    .meta-box span {
+      display: block;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+
+    .meta-box strong {
+      display: block;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+
+    .sidebar h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #d8e4f7;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar a:hover {
+      text-decoration: none;
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line);
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .card h2 {
+      font-size: 28px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .card h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .grid-2, .visual-grid, .metrics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3, .flag-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .tile {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 18px;
+    }
+
+    .tile small {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: #b8c7db;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+
+    .tile strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .tile p { margin: 0; font-size: 15px; }
+
+    .metric {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 132px;
+    }
+
+    .metric .value {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-top: 6px;
+    }
+
+    .metric .sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .flow-step {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #ebf2fd;
+      font-size: 14px;
+    }
+
+    .flow-arrow {
+      align-self: center;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .section-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #08111a;
+    }
+
+    .blue { background: var(--accent); }
+    .green { background: var(--green); }
+    .yellow { background: var(--yellow); }
+    .red { background: var(--red); }
+    .violet { background: var(--violet); }
+
+    .evidence-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: #dce7f8;
+    }
+
+    .pill.green { background: var(--green-soft); color: #c9f7e0; border-color: rgba(73,209,143,0.22); }
+    .pill.yellow { background: var(--yellow-soft); color: #fff0be; border-color: rgba(255,211,92,0.22); }
+    .pill.red { background: var(--red-soft); color: #ffd4d8; border-color: rgba(255,124,134,0.22); }
+
+    .image-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .image-wrap {
+      position: relative;
+      background: #0a1018;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .image-wrap img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .image-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(10,15,23,0.86);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #d8e6fb;
+      font-size: 12px;
+    }
+
+    .image-body {
+      padding: 18px 18px 20px;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .flag {
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .flag.high { background: var(--red-soft); border-color: rgba(255,124,134,0.22); }
+    .flag.medium { background: var(--yellow-soft); border-color: rgba(255,211,92,0.22); }
+    .flag.low { background: var(--green-soft); border-color: rgba(73,209,143,0.22); }
+
+    .flag .level {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .flag h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .flag p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .conclusion-box {
+      border: 1px solid rgba(73,209,143,0.22);
+      background: linear-gradient(180deg, rgba(73,209,143,0.12) 0%, rgba(255,255,255,0.02) 100%);
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 8px 0 50px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(78,161,255,0.18), rgba(78,161,255,0.08));
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.03);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid, .layout, .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
+        grid-template-columns: 1fr;
+      }
+      .sidebar { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-card, .card, .sidebar { padding: 18px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 32px; }
+      .card h2 { font-size: 24px; }
+      .flow { flex-direction: column; align-items: flex-start; }
+      .flow-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>USDT Theft &amp; Exchange Attribution Analysis</h1>
+            <p>
+              This case examines the theft of 100,042 USDT on Ethereum and the subsequent tracing of the stolen funds through intermediary wallets, layering behavior, consolidation stages, and final routing into a centralized exchange cluster.
+            </p>
+            <p>
+              Unlike cross-chain or mixer-based laundering cases, this investigation shows behavioral mixing through wallet-to-wallet layering before eventual exchange deposit. The core value of the case lies in proving continuity from theft event to final exchange attribution.
+            </p>
+            <div class="tag-row">
+              <div class="tag">Theft Tracing</div>
+              <div class="tag">Layering Analysis</div>
+              <div class="tag">Exchange Attribution</div>
+              <div class="tag">AML Investigation</div>
+            </div>
+          </div>
+          <div class="meta-grid">
+            <div class="meta-box">
+              <span>Network</span>
+              <strong>Ethereum (ERC-20)</strong>
+            </div>
+            <div class="meta-box">
+              <span>Asset</span>
+              <strong>USDT</strong>
+            </div>
+            <div class="meta-box">
+              <span>Total Stolen</span>
+              <strong>100,042 USDT</strong>
+            </div>
+            <div class="meta-box">
+              <span>Final Attribution</span>
+              <strong>Kraken Exchange Cluster</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="sidebar">
+        <h3>Report Navigation</h3>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#overview">Overview</a>
+        <a href="#methodology">Methodology</a>
+        <a href="#flow-analysis">Transaction Flow</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#attribution">Exchange Attribution</a>
+        <a href="#risk-flags">Risk Flags</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#conclusion">Conclusion</a>
+      </aside>
+
+      <div class="content">
+        <section id="dashboard" class="card">
+          <h2>Investigation Dashboard</h2>
+          <p>
+            High-level summary of the theft event, laundering behavior, and final attribution outcome.
+          </p>
+          <div class="metrics-grid">
+            <div class="tile metric">
+              <small>Stolen Amount</small>
+              <div class="value">100,042</div>
+              <div class="sub">USDT transferred from the victim wallet in the initial theft event</div>
+            </div>
+            <div class="tile metric">
+              <small>Primary Pattern</small>
+              <div class="value">Layering</div>
+              <div class="sub">Funds moved rapidly through intermediary wallets before exchange deposit</div>
+            </div>
+            <div class="tile metric">
+              <small>Key Signal</small>
+              <div class="value">Test Tx</div>
+              <div class="sub">Small validation transfer observed before the main deposit amount</div>
+            </div>
+            <div class="tile metric">
+              <small>Final Destination</small>
+              <div class="value">Kraken</div>
+              <div class="sub">Exchange attribution supported by behavior, clustering, and aggregation patterns</div>
+            </div>
+          </div>
+          <div class="evidence-strip">
+            <div class="pill red">Theft event</div>
+            <div class="pill yellow">Behavioral mixing</div>
+            <div class="pill yellow">Consolidation pattern</div>
+            <div class="pill red">Exchange cash-out route</div>
+          </div>
+        </section>
+
+        <section id="overview" class="card">
+          <h2>Executive Summary</h2>
+          <p>
+            On 13 June 2023, a total of 100,042 USDT was transferred from a victim wallet to a malicious address on the Ethereum network. From that point, the stolen funds were traced through multiple intermediary wallets and structured movements before reaching a centralized exchange cluster.
+          </p>
+          <p>
+            The investigation identified several key behaviors: rapid sequential transfers, a small test transaction before a main deposit, intermediate consolidation, and final routing into a wallet cluster consistent with centralized exchange operations. Based on transaction continuity, behavioral indicators, and clustering logic, the funds were attributed to Kraken.
+          </p>
+          <div class="grid-2">
+            <div class="tile">
+              <small>Core Story</small>
+              <strong>Direct laundering to exchange</strong>
+              <p>The stolen funds were not bridged cross-chain and did not use a mixer protocol. Instead, they were layered through wallets before being routed to an exchange.</p>
+            </div>
+            <div class="tile">
+              <small>Analytical Value</small>
+              <strong>Behavioral mixing without a mixer protocol</strong>
+              <p>The case shows how layering, structuring, and consolidation can mimic obfuscation behavior even without Tornado Cash or bridge usage.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="methodology" class="card">
+          <h2>Methodology</h2>
+          <p>
+            The investigation used a forensic tracing approach focused on transaction continuity, behavioral analysis, and cluster-based attribution.
+          </p>
+          <div class="section-list">
+            <div class="list-item">
+              <div class="icon blue">1</div>
+              <div>
+                <h3>Transaction Flow Analysis</h3>
+                <p>Funds were tracked step by step from the initial theft event through all subsequent wallets until the final exchange-linked destination.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon green">2</div>
+              <div>
+                <h3>Behavioral Pattern Analysis</h3>
+                <p>Structuring, rapid transfers, test transaction behavior, and aggregation were examined to understand the laundering method.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon yellow">3</div>
+              <div>
+                <h3>Clustering &amp; Attribution</h3>
+                <p>Wallets were grouped based on transaction relationships and deposit behavior to identify centralized exchange characteristics.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon violet">4</div>
+              <div>
+                <h3>Elimination Review</h3>
+                <p>No interaction was observed with mixer protocols, bridges, or DeFi routing, strengthening the view that the objective was direct exchange cash-out.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="flow-analysis" class="card">
+          <h2>Transaction Flow Analysis</h2>
+          <p>
+            The traced path shows a continuous movement from the victim wallet to the scammer wallet, through intermediary addresses, into consolidation points, and finally to a wallet cluster attributed to Kraken.
+          </p>
+          <div class="flow">
+            <div class="flow-step">Victim Wallet</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Scammer Wallet</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Intermediary Wallets</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Test + Main Transfer</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Consolidation Wallets</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step">Kraken Cluster</div>
+          </div>
+
+          <div class="grid-3">
+            <div class="tile">
+              <small>Step 1</small>
+              <strong>Theft Event</strong>
+              <p>100,042 USDT left the victim wallet and moved to the initial malicious recipient.</p>
+            </div>
+            <div class="tile">
+              <small>Step 2</small>
+              <strong>Rapid Transfer Sequence</strong>
+              <p>Funds were quickly moved intact across intermediary wallets, indicating active laundering rather than holding.</p>
+            </div>
+            <div class="tile">
+              <small>Step 3</small>
+              <strong>Structuring Behavior</strong>
+              <p>A small validation transfer was made before the main amount, matching exchange deposit testing behavior.</p>
+            </div>
+            <div class="tile">
+              <small>Step 4</small>
+              <strong>Consolidation</strong>
+              <p>Funds merged with other inflows in a wallet used for aggregation, a common exchange-side indicator.</p>
+            </div>
+            <div class="tile">
+              <small>Step 5</small>
+              <strong>Final Routing</strong>
+              <p>The aggregated funds were transferred to a larger wallet consistent with centralized exchange deposit operations.</p>
+            </div>
+            <div class="tile">
+              <small>Interpretation</small>
+              <strong>Behavioral Mixing</strong>
+              <p>Although no mixer protocol was used, the layering and consolidation pattern demonstrates behavioral mixing before exchange cash-out.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="evidence" class="card">
+          <h2>Evidence &amp; Analytical Findings</h2>
+          <p>
+            The case is supported by a strong evidentiary chain combining flow continuity, behavioral signals, and destination attribution.
+          </p>
+          <div class="section-list">
+            <div class="list-item">
+              <div class="icon blue">A</div>
+              <div>
+                <h3>Continuous Transaction Chain</h3>
+                <p>Funds were followed from the theft event to the final destination without breaks, conversions, or cross-chain jumps.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon green">B</div>
+              <div>
+                <h3>Test Transaction Pattern</h3>
+                <p>A small transfer occurred before the larger movement, which is consistent with destination validation prior to deposit.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon yellow">C</div>
+              <div>
+                <h3>Fund Consolidation</h3>
+                <p>Multiple inflows were merged into a single wallet before the final exchange-bound transfer, strengthening the exchange attribution case.</p>
+              </div>
+            </div>
+            <div class="list-item">
+              <div class="icon violet">D</div>
+              <div>
+                <h3>No Mixer / No Bridge / No DeFi</h3>
+                <p>The absence of protocol-based obfuscation supports the conclusion that the actor prioritized a fast path to centralized exchange deposit.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="tile">
+              <small>Why This Matters</small>
+              <strong>Strong linkage quality</strong>
+              <p>Because the asset remained USDT throughout and stayed on the same network, the continuity of evidence is especially strong.</p>
+            </div>
+            <div class="tile">
+              <small>Analytical Outcome</small>
+              <strong>Attribution-ready path</strong>
+              <p>The case produces a clear evidentiary chain that is suitable for compliance review, investigative reporting, and exchange attribution discussion.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="attribution" class="card">
+          <h2>Exchange Attribution Analysis</h2>
+          <p>
+            The final destination wallet displayed several characteristics consistent with centralized exchange-controlled infrastructure rather than a personal wallet.
+          </p>
+          <div class="grid-2">
+            <div class="tile">
+              <small>Attribution Indicator</small>
+              <strong>High-volume aggregated inflows</strong>
+              <p>The destination wallet handled large combined balances and inflows from multiple sources.</p>
+            </div>
+            <div class="tile">
+              <small>Attribution Indicator</small>
+              <strong>Structured deposit behavior</strong>
+              <p>The transaction sequence and validation pattern aligned with exchange deposit workflows.</p>
+            </div>
+            <div class="tile">
+              <small>Attribution Indicator</small>
+              <strong>Cluster relationship</strong>
+              <p>The wallet was not isolated; it was linked to a larger exchange-controlled pattern through transaction relationships.</p>
+            </div>
+            <div class="tile">
+              <small>Final Determination</small>
+              <strong>Kraken</strong>
+              <p>Based on tracing, behavior, and clustering, the final destination was attributed to Kraken exchange infrastructure.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="risk-flags" class="card">
+          <h2>Risk Indicators</h2>
+          <p>
+            The following indicators are relevant from an AML, transaction monitoring, and fraud investigation perspective.
+          </p>
+          <div class="flag-grid">
+            <div class="flag high">
+              <div class="level">High</div>
+              <h4>Theft Event</h4>
+              <p>A large unauthorized transfer from a victim wallet marks the origin of the case.</p>
+            </div>
+            <div class="flag high">
+              <div class="level">High</div>
+              <h4>Rapid Layering</h4>
+              <p>Funds moved quickly across multiple wallets, indicating active laundering rather than passive storage.</p>
+            </div>
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Test Transaction Behavior</h4>
+              <p>A small validation transfer was observed before the main movement, which is a known exchange deposit pattern.</p>
+            </div>
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Exchange Cash-Out Intent</h4>
+              <p>The overall path strongly suggests the objective was to move the stolen funds into centralized exchange infrastructure.</p>
+            </div>
+            <div class="flag medium">
+              <div class="level">Medium</div>
+              <h4>Behavioral Mixing</h4>
+              <p>Although no mixer protocol was used, layering, splitting, and consolidation created an obfuscation effect similar to behavioral mixing.</p>
+            </div>
+            <div class="flag low">
+              <div class="level">Low</div>
+              <h4>Strong Traceability</h4>
+              <p>The absence of bridging or protocol-based anonymization preserved a strong evidentiary chain from source to destination.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="screenshots" class="card">
+          <h2>Screenshots &amp; Visual Analysis</h2>
+          <p>
+            The image below supports the tracing narrative by showing intermediary wallet movement, layering behavior, and final routing to an exchange-linked destination.
+          </p>
+          <div class="visual-grid">
+            <div class="card image-card">
+              <div class="image-wrap">
+                <div class="image-badge">Exhibit A · Flow Visualization</div>
+                <img src="eth-0xf8b2207238bd56965db96f7520ac4365b7924bb7.png" alt="USDT theft flow analysis graph" />
+              </div>
+              <div class="image-body">
+                <h3>USDT Flow Reconstruction</h3>
+                <p class="caption">
+                  Visual reconstruction of the theft path, intermediary wallet routing, consolidation behavior, and final exchange-linked destination.
+                </p>
+              </div>
+            </div>
+            <div class="card image-card">
+              <div class="image-body">
+                <h3>Tools Used</h3>
+                <p class="caption">
+                  Blockchain explorers were used for transaction validation, while visual flow analysis and clustering logic were used to understand destination behavior and exchange attribution.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="conclusion" class="card">
+          <h2>Conclusion</h2>
+          <p>
+            The investigation confirms that 100,042 USDT was stolen and then routed through intermediary wallets using layering, structuring, and consolidation techniques before reaching a centralized exchange cluster.
+          </p>
+          <p>
+            This case does not rely on mixer protocols or bridge infrastructure. Instead, it demonstrates how behavioral mixing through wallet-to-wallet transfers can still be used to obscure origin before cash-out.
+          </p>
+          <div class="conclusion-box">
+            <h3>Analytical Conclusion</h3>
+            <p>
+              The continuous transaction chain, combined with structuring behavior, consolidation patterns, and cluster-based destination analysis, supports a strong attribution outcome. Final determination: the stolen funds were successfully traced to Kraken exchange infrastructure.
+            </p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <div class="footer-nav">
+      <a class="btn secondary" href="index.html">← Back to Portfolio</a>
+      <a class="btn" href="#dashboard">Back to Top ↑</a>
+    </div>
+  </div>
+</body>
+</html>
