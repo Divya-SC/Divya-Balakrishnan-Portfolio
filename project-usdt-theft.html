@@ -48,9 +48,7 @@
       margin: 0 auto;
     }
 
-    .hero {
-      padding: 44px 0 28px;
-    }
+    .hero { padding: 44px 0 28px; }
 
     .hero-card {
       position: relative;
@@ -79,6 +77,27 @@
       font-size: clamp(34px, 4.7vw, 54px);
       letter-spacing: -0.03em;
       margin-bottom: 14px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(78,161,255,0.24);
+      background: var(--accent-soft);
+      color: #c4ddff;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
     }
 
     .hero-grid {
@@ -209,8 +228,6 @@
       margin-bottom: 14px;
     }
 
-    .card p:last-child { margin-bottom: 0; }
-
     .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
       display: grid;
       gap: 16px;
@@ -240,6 +257,7 @@
       display: block;
       font-size: 16px;
       margin-bottom: 8px;
+      word-break: break-word;
     }
 
     .tile p { margin: 0; font-size: 15px; }
@@ -339,10 +357,52 @@
     .pill.yellow { background: var(--yellow-soft); color: #fff0be; border-color: rgba(255,211,92,0.22); }
     .pill.red { background: var(--red-soft); color: #ffd4d8; border-color: rgba(255,124,134,0.22); }
 
-    .image-card {
-      overflow: hidden;
-      padding: 0;
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
     }
+
+    table {
+      width: 100%;
+      min-width: 780px;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.02);
+    }
+
+    th, td {
+      padding: 13px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #dce7f8;
+      background: rgba(78,161,255,0.08);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    code.masked {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      color: #eaf3ff;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .image-card { overflow: hidden; padding: 0; }
 
     .image-wrap {
       position: relative;
@@ -368,9 +428,7 @@
       font-size: 12px;
     }
 
-    .image-body {
-      padding: 18px 18px 20px;
-    }
+    .image-body { padding: 18px 18px 20px; }
 
     .caption {
       color: var(--muted);
@@ -439,9 +497,7 @@
       font-weight: 700;
     }
 
-    .btn.secondary {
-      background: rgba(255,255,255,0.03);
-    }
+    .btn.secondary { background: rgba(255,255,255,0.03); }
 
     @media (max-width: 980px) {
       .hero-grid, .layout, .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
@@ -464,6 +520,7 @@
   <div class="container">
     <section class="hero">
       <div class="hero-card">
+        <div class="eyebrow">Portfolio Case Study</div>
         <div class="hero-grid">
           <div class="hero-copy">
             <h1>USDT Theft &amp; Exchange Attribution Analysis</h1>
@@ -471,7 +528,7 @@
               This case examines the theft of 100,042 USDT on Ethereum and the subsequent tracing of the stolen funds through intermediary wallets, layering behavior, consolidation stages, and final routing into a centralized exchange cluster.
             </p>
             <p>
-              Unlike cross-chain or mixer-based laundering cases, this investigation shows behavioral mixing through wallet-to-wallet layering before eventual exchange deposit. The core value of the case lies in proving continuity from theft event to final exchange attribution.
+              Unlike cross-chain or mixer-based laundering cases, this investigation shows behavioral mixing through wallet-to-wallet layering before eventual exchange deposit. Transaction hashes and wallet addresses are masked for safe portfolio presentation.
             </p>
             <div class="tag-row">
               <div class="tag">Theft Tracing</div>
@@ -487,7 +544,7 @@
             </div>
             <div class="meta-box">
               <span>Asset</span>
-              <strong>USDT</strong>
+              <strong>Tether USD (USDT)</strong>
             </div>
             <div class="meta-box">
               <span>Total Stolen</span>
@@ -509,7 +566,8 @@
         <a href="#overview">Overview</a>
         <a href="#methodology">Methodology</a>
         <a href="#flow-analysis">Transaction Flow</a>
-        <a href="#evidence">Evidence</a>
+        <a href="#masked-evidence">Masked Evidence</a>
+        <a href="#evidence">Analytical Findings</a>
         <a href="#attribution">Exchange Attribution</a>
         <a href="#risk-flags">Risk Flags</a>
         <a href="#screenshots">Screenshots</a>
@@ -519,9 +577,7 @@
       <div class="content">
         <section id="dashboard" class="card">
           <h2>Investigation Dashboard</h2>
-          <p>
-            High-level summary of the theft event, laundering behavior, and final attribution outcome.
-          </p>
+          <p>High-level summary of the theft event, laundering behavior, and final attribution outcome.</p>
           <div class="metrics-grid">
             <div class="tile metric">
               <small>Stolen Amount</small>
@@ -576,9 +632,7 @@
 
         <section id="methodology" class="card">
           <h2>Methodology</h2>
-          <p>
-            The investigation used a forensic tracing approach focused on transaction continuity, behavioral analysis, and cluster-based attribution.
-          </p>
+          <p>The investigation used a forensic tracing approach focused on transaction continuity, behavioral analysis, and cluster-based attribution.</p>
           <div class="section-list">
             <div class="list-item">
               <div class="icon blue">1</div>
@@ -664,11 +718,90 @@
           </div>
         </section>
 
+        <section id="masked-evidence" class="card">
+          <h2>Masked Transaction Evidence</h2>
+          <p>
+            Key transaction hashes and wallet addresses are presented in masked format for safe public portfolio sharing while preserving the investigative chain.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Masked TXID / Hash</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Amount / Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Initial Theft</td>
+                  <td><code class="masked">0x5a3940...bf307a</code></td>
+                  <td><code class="masked">0x045B3E...99D609</code></td>
+                  <td><code class="masked">0xcc461B...17DBc6</code></td>
+                  <td>100,042 USDT</td>
+                </tr>
+                <tr>
+                  <td>First Transfer</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0xcc461B...17DBc6</code></td>
+                  <td><code class="masked">0xF8B220...924bb7</code></td>
+                  <td>Full amount transferred</td>
+                </tr>
+                <tr>
+                  <td>Second Transfer</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0xF8B220...924bb7</code></td>
+                  <td><code class="masked">0xD2d2Ef...masked</code></td>
+                  <td>Funds moved intact</td>
+                </tr>
+                <tr>
+                  <td>Test Transaction</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0xD2d2Ef...masked</code></td>
+                  <td><code class="masked">0xfCf03F...masked</code></td>
+                  <td>10 USDT validation transfer</td>
+                </tr>
+                <tr>
+                  <td>Main Transfer</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0xD2d2Ef...masked</code></td>
+                  <td><code class="masked">0xfCf03F...masked</code></td>
+                  <td>99,990 USDT main transfer</td>
+                </tr>
+                <tr>
+                  <td>Consolidation</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0xfCf03F...masked</code></td>
+                  <td><code class="masked">0x39720b...masked</code></td>
+                  <td>Funds moved to aggregation path</td>
+                </tr>
+                <tr>
+                  <td>Aggregation</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0x39720b...masked</code></td>
+                  <td><code class="masked">0xa29E96...masked</code></td>
+                  <td>Combined balance approx. 160,908 USDT</td>
+                </tr>
+                <tr>
+                  <td>Final Exchange Routing</td>
+                  <td><code class="masked">TXID masked</code></td>
+                  <td><code class="masked">0xa29E96...masked</code></td>
+                  <td><code class="masked">0x8E9D0D...731136</code></td>
+                  <td>Total received approx. 364,073 USDT; attributed to Kraken cluster</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top: 14px; color: var(--muted-2);">
+            Note: Full identifiers are intentionally excluded from the public-facing report. The masked values preserve traceability for presentation without exposing complete transaction or wallet data.
+          </p>
+        </section>
+
         <section id="evidence" class="card">
           <h2>Evidence &amp; Analytical Findings</h2>
-          <p>
-            The case is supported by a strong evidentiary chain combining flow continuity, behavioral signals, and destination attribution.
-          </p>
+          <p>The case is supported by a strong evidentiary chain combining flow continuity, behavioral signals, and destination attribution.</p>
           <div class="section-list">
             <div class="list-item">
               <div class="icon blue">A</div>
@@ -716,9 +849,7 @@
 
         <section id="attribution" class="card">
           <h2>Exchange Attribution Analysis</h2>
-          <p>
-            The final destination wallet displayed several characteristics consistent with centralized exchange-controlled infrastructure rather than a personal wallet.
-          </p>
+          <p>The final destination wallet displayed several characteristics consistent with centralized exchange-controlled infrastructure rather than a personal wallet.</p>
           <div class="grid-2">
             <div class="tile">
               <small>Attribution Indicator</small>
@@ -745,9 +876,7 @@
 
         <section id="risk-flags" class="card">
           <h2>Risk Indicators</h2>
-          <p>
-            The following indicators are relevant from an AML, transaction monitoring, and fraud investigation perspective.
-          </p>
+          <p>The following indicators are relevant from an AML, transaction monitoring, and fraud investigation perspective.</p>
           <div class="flag-grid">
             <div class="flag high">
               <div class="level">High</div>
@@ -784,9 +913,7 @@
 
         <section id="screenshots" class="card">
           <h2>Screenshots &amp; Visual Analysis</h2>
-          <p>
-            The image below supports the tracing narrative by showing intermediary wallet movement, layering behavior, and final routing to an exchange-linked destination.
-          </p>
+          <p>The image below supports the tracing narrative by showing intermediary wallet movement, layering behavior, and final routing to an exchange-linked destination.</p>
           <div class="visual-grid">
             <div class="card image-card">
               <div class="image-wrap">
@@ -795,17 +922,13 @@
               </div>
               <div class="image-body">
                 <h3>USDT Flow Reconstruction</h3>
-                <p class="caption">
-                  Visual reconstruction of the theft path, intermediary wallet routing, consolidation behavior, and final exchange-linked destination.
-                </p>
+                <p class="caption">Visual reconstruction of the theft path, intermediary wallet routing, consolidation behavior, and final exchange-linked destination.</p>
               </div>
             </div>
             <div class="card image-card">
               <div class="image-body">
                 <h3>Tools Used</h3>
-                <p class="caption">
-                  Blockchain explorers were used for transaction validation, while visual flow analysis and clustering logic were used to understand destination behavior and exchange attribution.
-                </p>
+                <p class="caption">Blockchain explorers were used for transaction validation, while visual flow analysis and clustering logic were used to understand destination behavior and exchange attribution.</p>
               </div>
             </div>
           </div>
@@ -822,7 +945,7 @@
           <div class="conclusion-box">
             <h3>Analytical Conclusion</h3>
             <p>
-              The continuous transaction chain, combined with structuring behavior, consolidation patterns, and cluster-based destination analysis, supports a strong attribution outcome. Final determination: the stolen funds were successfully traced to Kraken exchange infrastructure.
+              The continuous transaction chain, combined with structuring behavior, consolidation patterns, and cluster-based destination analysis, supports a strong attribution outcome. Final determination: the stolen funds were traced to Kraken exchange infrastructure.
             </p>
           </div>
         </section>
