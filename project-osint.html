@@ -6,162 +6,213 @@
 <title>OSINT Challenges | Divya Balakrishnan</title>
 
 <style>
-body {
-  font-family: Arial;
+body{
+  font-family:Arial, sans-serif;
   background:#0c1420;
   color:#f3f7fc;
   margin:0;
   padding:40px;
 }
-
-h1 {
-  margin-bottom:10px;
+.container{
+  max-width:1150px;
+  margin:auto;
 }
-
-p {
-  color:#b7c2d4;
-  line-height:1.6;
-}
-
-.grid {
+h1{margin-bottom:10px}
+p{color:#b7c2d4;line-height:1.7}
+.grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:20px;
   margin-top:30px;
 }
-
-.card {
+.card{
   background:#101927;
   border:1px solid #1f2a3a;
-  border-radius:12px;
-  padding:20px;
+  border-radius:14px;
+  padding:22px;
 }
-
-small {
-  color:#92a2bd;
+small{color:#92a2bd}
+h3{margin:8px 0 12px}
+.badge{
+  display:inline-block;
+  background:#1a2535;
+  color:#9fc1ff;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  margin:4px 4px 8px 0;
 }
-
-h3 {
-  margin:8px 0;
+.note{
+  background:#13213a;
+  border-left:4px solid #4e8cff;
+  padding:16px;
+  border-radius:10px;
+  margin:20px 0;
 }
-
 @media(max-width:800px){
-  .grid {
-    grid-template-columns:1fr;
-  }
+  body{padding:22px}
+  .grid{grid-template-columns:1fr}
 }
 </style>
-
 </head>
+
 <body>
+<div class="container">
 
 <h1>OSINT Challenges & Investigation Methodology</h1>
 
 <p>
-This section highlights OSINT challenges completed using structured investigation techniques across GEOINT, cybercrime attribution, breach data analysis, archive research, and public records.  
-All investigations were conducted using passive, legal open-source intelligence methods.  
-Sensitive findings and results are intentionally excluded.
+This section summarizes OSINT challenges completed to strengthen practical investigation skills across GEOINT, cybercrime attribution, public-record research, archive analysis, breach-data correlation, and digital footprint tracing.
 </p>
+
+<div class="note">
+  <p>
+    All work was conducted using passive, legal open-source intelligence methods. No private access, account interaction, harassment, or restricted-system access was used. Sensitive answers, personal identifiers, and screenshots are intentionally excluded.
+  </p>
+</div>
 
 <div class="grid">
 
 <div class="card">
 <small>Challenge #1</small>
 <h3>GEOINT Location Identification</h3>
-<p><b>Objective:</b> Identify a location from visual clues.</p>
-<p><b>Techniques:</b> GEOINT, environmental analysis</p>
-<p><b>Sources:</b> Google Maps, Street View, reverse image search</p>
+<span class="badge">GEOINT</span>
+<span class="badge">Street View</span>
+<span class="badge">Visual Analysis</span>
+<p><b>Objective:</b> Identify a real-world location from an image-based clue.</p>
+<p><b>Tools Used:</b> Google Maps, Google Street View, reverse image search, AI-assisted location narrowing.</p>
+<p><b>How I approached it:</b> I reviewed visible environmental clues such as road layout, building height, commercial signs, street structure, and nearby transport indicators. I then narrowed possible areas and validated the match using Street View comparison.</p>
 </div>
 
 <div class="card">
 <small>Challenge #2</small>
-<h3>Email Attribution via Repository</h3>
-<p><b>Objective:</b> Trace developer email footprint.</p>
-<p><b>Techniques:</b> GitHub commit analysis</p>
-<p><b>Sources:</b> GitHub, commit metadata</p>
+<h3>Email Attribution via GitHub Repository Analysis</h3>
+<span class="badge">GitHub</span>
+<span class="badge">Commit History</span>
+<span class="badge">Metadata</span>
+<p><b>Objective:</b> Trace the public email footprint of an OSINT tool creator.</p>
+<p><b>Tools Used:</b> GitHub, repository history, commit records, public profile review, timestamp conversion.</p>
+<p><b>How I approached it:</b> I reviewed the creator’s GitHub repositories, checked older commits and documentation files, and compared email appearances across project history to identify the earliest public usage timeline.</p>
 </div>
 
 <div class="card">
 <small>Challenge #3</small>
-<h3>Public Record Correlation</h3>
-<p><b>Objective:</b> Link identity using public records.</p>
-<p><b>Techniques:</b> Cross-source validation</p>
-<p><b>Sources:</b> Search engines, public records</p>
+<h3>Public Record & Identity Correlation</h3>
+<span class="badge">Public Records</span>
+<span class="badge">Search Engines</span>
+<span class="badge">Correlation</span>
+<p><b>Objective:</b> Link open-source identity indicators to a target profile.</p>
+<p><b>Tools Used:</b> Google, public records, social media review, public breach-checking platforms.</p>
+<p><b>How I approached it:</b> I started with name-based searches, reviewed public profiles and records, then compared dates, locations, and repeated identifiers to assess whether sources referred to the same individual.</p>
 </div>
 
 <div class="card">
 <small>Challenge #4</small>
-<h3>Company Address Research</h3>
-<p><b>Objective:</b> Identify historical address data.</p>
-<p><b>Techniques:</b> Registry analysis</p>
-<p><b>Sources:</b> Company records, filings</p>
+<h3>Company Records & Historical Address Research</h3>
+<span class="badge">Corporate Registry</span>
+<span class="badge">Document Review</span>
+<span class="badge">Timeline</span>
+<p><b>Objective:</b> Identify historical address information from company-related public records.</p>
+<p><b>Tools Used:</b> Public company registries, French business record platforms, corporate filings, document search.</p>
+<p><b>How I approached it:</b> I searched for company affiliations connected to the subject, reviewed incorporation and filing dates, then used documents from the relevant year to identify address references.</p>
 </div>
 
 <div class="card">
 <small>Challenge #5</small>
 <h3>Depixelation & Boarding Pass Analysis</h3>
-<p><b>Objective:</b> Recover hidden travel data.</p>
-<p><b>Techniques:</b> Image analysis, reconstruction</p>
-<p><b>Sources:</b> TinEye, Google Images, IATA</p>
+<span class="badge">Image OSINT</span>
+<span class="badge">Reverse Search</span>
+<span class="badge">Aviation Data</span>
+<p><b>Objective:</b> Recover travel-related information from a pixelated boarding pass image.</p>
+<p><b>Tools Used:</b> TinEye, Google Images, image comparison, IATA airport code lookup.</p>
+<p><b>How I approached it:</b> I used reverse image search to locate matching or related images, compared visible text patterns, then validated airport details through official aviation/IATA reference sources.</p>
 </div>
 
 <div class="card">
 <small>Challenge #6</small>
-<h3>Historical Event Research</h3>
-<p><b>Objective:</b> Identify location and date.</p>
-<p><b>Techniques:</b> Timeline reconstruction</p>
-<p><b>Sources:</b> News, Wayback Machine</p>
+<h3>Historical Event & Social Footprint Research</h3>
+<span class="badge">Timeline</span>
+<span class="badge">Social Media</span>
+<span class="badge">Archives</span>
+<p><b>Objective:</b> Identify a historical event location and related date using public contextual clues.</p>
+<p><b>Tools Used:</b> News articles, public social profiles, Yelp, Wayback Machine, search engines.</p>
+<p><b>How I approached it:</b> I built a timeline from public articles and social references, identified relevant people and places, then used archived/review-based content to verify the event context.</p>
 </div>
 
 <div class="card">
 <small>Challenge #7</small>
-<h3>Vehicle Identification</h3>
-<p><b>Objective:</b> Identify vehicle via social media.</p>
-<p><b>Techniques:</b> Username pivoting</p>
-<p><b>Sources:</b> Instagram, image analysis</p>
+<h3>Vehicle Identification from Social Media</h3>
+<span class="badge">SOCMINT</span>
+<span class="badge">Vehicle OSINT</span>
+<span class="badge">Visual Verification</span>
+<p><b>Objective:</b> Identify vehicle details linked to a cybercrime subject.</p>
+<p><b>Tools Used:</b> Instagram, public vehicle lookup sources, image analysis, profile review.</p>
+<p><b>How I approached it:</b> I pivoted from known aliases/usernames, reviewed social media posts and highlights, checked visible vehicle indicators, and validated vehicle information using public lookup sources.</p>
 </div>
 
 <div class="card">
 <small>Challenge #8</small>
-<h3>Intelligence Case Reconstruction</h3>
-<p><b>Objective:</b> Reconstruct historical intelligence case.</p>
-<p><b>Techniques:</b> Document analysis</p>
-<p><b>Sources:</b> Archives, reports</p>
+<h3>Historical Intelligence Case Reconstruction</h3>
+<span class="badge">Archive Research</span>
+<span class="badge">Document Analysis</span>
+<span class="badge">GEOINT</span>
+<p><b>Objective:</b> Reconstruct an intelligence-related event using indirect clues and official records.</p>
+<p><b>Tools Used:</b> Government archives, inquiry documents, Google Maps, Street View, open-source reporting.</p>
+<p><b>How I approached it:</b> I analyzed the clue text, identified likely historical events, reviewed official inquiry documents, verified location details, and used map/street-level evidence for contextual support.</p>
 </div>
 
 <div class="card">
 <small>Challenge #9</small>
-<h3>Russian Source Research</h3>
-<p><b>Objective:</b> Identify missing details.</p>
-<p><b>Techniques:</b> Language-based search</p>
-<p><b>Sources:</b> Yandex, regional sources</p>
+<h3>Russian-Language Public Source Research</h3>
+<span class="badge">Yandex</span>
+<span class="badge">Russian Sources</span>
+<span class="badge">Public Disclosure</span>
+<p><b>Objective:</b> Identify missing biographical information from Russian-language open sources.</p>
+<p><b>Tools Used:</b> Yandex, Russian-language search queries, public government disclosures.</p>
+<p><b>How I approached it:</b> I used regional search engines better suited for Russian-language content, searched the full Cyrillic name, and prioritized official or authoritative public sources over random reposted data.</p>
 </div>
 
 <div class="card">
 <small>Challenge #10</small>
-<h3>Identifier Correlation</h3>
-<p><b>Objective:</b> Link email to identifier.</p>
-<p><b>Techniques:</b> Breach data analysis</p>
-<p><b>Sources:</b> Have I Been Pwned</p>
+<h3>Security Identifier Correlation</h3>
+<span class="badge">Breach Review</span>
+<span class="badge">Identifier Correlation</span>
+<span class="badge">Ethics</span>
+<p><b>Objective:</b> Correlate a digital identifier with a national-style identifier through passive OSINT.</p>
+<p><b>Tools Used:</b> Have I Been Pwned, public breach reporting, OSINT ethics references, open-source research.</p>
+<p><b>How I approached it:</b> I treated the email as a pivot point, checked whether it appeared in public breach references, and reviewed only already-public reporting while avoiding any live account interaction or restricted access.</p>
 </div>
 
 <div class="card">
 <small>Challenge #11</small>
-<h3>Social Profile Association</h3>
-<p><b>Objective:</b> Identify linked social account.</p>
-<p><b>Techniques:</b> Email/phone correlation</p>
-<p><b>Sources:</b> Public datasets</p>
+<h3>Social Network Profile Association</h3>
+<span class="badge">Profile Correlation</span>
+<span class="badge">Email Pivot</span>
+<span class="badge">Historical Data</span>
+<p><b>Objective:</b> Identify a historical social media profile associated with known identifiers.</p>
+<p><b>Tools Used:</b> Public breach records, historical VK-related datasets, email and phone correlation methods.</p>
+<p><b>How I approached it:</b> I correlated reused identifiers across historical datasets and checked whether the same email/phone combination appeared in social platform-related records, without contacting or accessing any account.</p>
 </div>
 
 <div class="card">
 <small>Challenge #12</small>
-<h3>Cybercriminal Attribution</h3>
-<p><b>Objective:</b> Identify forum user.</p>
-<p><b>Techniques:</b> Username reuse, archive analysis</p>
-<p><b>Sources:</b> Wayback Machine, breach data, social media</p>
+<h3>Cybercriminal Forum Attribution</h3>
+<span class="badge">Wayback Machine</span>
+<span class="badge">Google Dorking</span>
+<span class="badge">Cross-Platform Pivoting</span>
+<p><b>Objective:</b> Attribute a historical forum post to an online identity using open-source evidence.</p>
+<p><b>Tools Used:</b> Wayback Machine, Google dorking, public breach datasets, Have I Been Pwned, YouTube, Twitter/X, archived forum pages.</p>
+<p><b>How I approached it:</b> I reconstructed the forum thread using archive data, identified username reuse, pivoted from username to email, then correlated public platform activity to assess common ownership and attribution confidence.</p>
 </div>
 
 </div>
 
+<div class="note">
+  <p>
+    <b>Portfolio Relevance:</b> These challenges demonstrate practical skills in source validation, digital footprint analysis, public-record research, cross-platform pivoting, archive reconstruction, ethical breach-data handling, and structured investigative reporting. These skills directly support blockchain investigation, AML investigation, fraud tracing, and financial crime analysis roles.
+  </p>
+</div>
+
+</div>
 </body>
 </html>
