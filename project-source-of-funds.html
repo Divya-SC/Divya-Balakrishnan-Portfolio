@@ -48,9 +48,7 @@
       margin: 0 auto;
     }
 
-    .hero {
-      padding: 44px 0 28px;
-    }
+    .hero { padding: 44px 0 28px; }
 
     .hero-card {
       position: relative;
@@ -261,6 +259,7 @@
       display: block;
       font-size: 16px;
       margin-bottom: 8px;
+      word-break: break-word;
     }
 
     .tile p { margin: 0; font-size: 15px; }
@@ -360,10 +359,7 @@
     .pill.yellow { background: var(--yellow-soft); color: #fff0be; border-color: rgba(255,211,92,0.22); }
     .pill.red { background: var(--red-soft); color: #ffd4d8; border-color: rgba(255,124,134,0.22); }
 
-    .image-card {
-      overflow: hidden;
-      padding: 0;
-    }
+    .image-card { overflow: hidden; padding: 0; }
 
     .image-wrap {
       position: relative;
@@ -389,9 +385,7 @@
       font-size: 12px;
     }
 
-    .image-body {
-      padding: 18px 18px 20px;
-    }
+    .image-body { padding: 18px 18px 20px; }
 
     .caption {
       color: var(--muted);
@@ -459,6 +453,51 @@
       color: var(--muted);
     }
 
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.02);
+    }
+
+    th, td {
+      padding: 13px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    th {
+      color: #dce7f8;
+      background: rgba(78,161,255,0.08);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    code.masked {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      color: #eaf3ff;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
     .conclusion-box {
       border: 1px solid rgba(73,209,143,0.22);
       background: linear-gradient(180deg, rgba(73,209,143,0.12) 0%, rgba(255,255,255,0.02) 100%);
@@ -487,9 +526,7 @@
       font-weight: 700;
     }
 
-    .btn.secondary {
-      background: rgba(255,255,255,0.03);
-    }
+    .btn.secondary { background: rgba(255,255,255,0.03); }
 
     @media (max-width: 980px) {
       .hero-grid, .layout, .grid-2, .grid-3, .visual-grid, .metrics-grid, .flag-grid {
@@ -513,7 +550,7 @@
   <div class="container">
     <section class="hero">
       <div class="hero-card">
-        <div class="eyebrow"></div>
+        <div class="eyebrow">Portfolio Case Study</div>
         <div class="hero-grid">
           <div class="hero-copy">
             <h1>Cross-Chain Blockchain Investigation Case Study</h1>
@@ -521,7 +558,7 @@
               End-to-end tracing of funds across Solana and Ethereum, following movement through Wormhole and Across Protocol into KuCoin-linked deposit wallets using transaction-level evidence, bridge interaction review, time correlation, and value consistency.
             </p>
             <p>
-              This report presents the investigation in a structured format suitable for portfolio presentation, highlighting methodology, core evidence, risk indicators, and final analytical conclusion.
+              This report presents the investigation in a structured format suitable for portfolio presentation, highlighting methodology, core evidence, risk indicators, and final analytical conclusion. Transaction hashes and wallet addresses are intentionally masked for safe public sharing.
             </p>
             <div class="tag-row">
               <div class="tag">Source of Funds</div>
@@ -537,7 +574,7 @@
             </div>
             <div class="meta-box">
               <span>Networks</span>
-              <strong>Solana / Ethereum</strong>
+              <strong>Solana / Ethereum / Arbitrum</strong>
             </div>
             <div class="meta-box">
               <span>Bridge Infrastructure</span>
@@ -561,6 +598,7 @@
         <a href="#source-of-funds">Source of Funds</a>
         <a href="#deposit-addresses">Deposit Addresses</a>
         <a href="#evidence">Evidence</a>
+        <a href="#masked-evidence">Masked TXID Evidence</a>
         <a href="#risk-flags">Risk Flags</a>
         <a href="#visual-analysis">Screenshots</a>
         <a href="#conclusion">Conclusion</a>
@@ -569,9 +607,7 @@
       <div class="content">
         <section id="dashboard" class="card">
           <h2>Investigation Dashboard</h2>
-          <p>
-            High-level summary of the case structure, bridge behavior, and destination attribution.
-          </p>
+          <p>High-level summary of the case structure, bridge behavior, and destination attribution.</p>
           <div class="metrics-grid">
             <div class="tile metric">
               <small>Upstream Funding</small>
@@ -626,9 +662,7 @@
 
         <section id="methodology" class="card">
           <h2>Methodology</h2>
-          <p>
-            The case was built using backward tracing, post-bridge recipient analysis, final deposit grouping, and transaction-level consistency checks across multiple blockchain stages.
-          </p>
+          <p>The case was built using backward tracing, post-bridge recipient analysis, final deposit grouping, and transaction-level consistency checks across multiple blockchain stages.</p>
           <div class="section-list">
             <div class="list-item">
               <div class="icon blue">1</div>
@@ -691,7 +725,7 @@
             </div>
             <div class="tile">
               <small>Common Ethereum Funding Point</small>
-              <strong>0x82fe8720...</strong>
+              <strong>0x82fe8720...381eD</strong>
               <p>Multiple receiver wallets converge back to this address prior to Across Protocol interaction, supporting common-source attribution.</p>
             </div>
           </div>
@@ -726,7 +760,6 @@
           <p>
             The linkage between source, bridge movements, and final deposit endpoints is supported by multiple independent indicators. Together, they form a strong evidentiary basis for the case conclusion.
           </p>
-
           <div class="section-list">
             <div class="list-item">
               <div class="icon blue">A</div>
@@ -757,7 +790,6 @@
               </div>
             </div>
           </div>
-
           <div class="timeline">
             <div class="timeline-item">
               <div class="timeline-time">Stage 1</div>
@@ -774,11 +806,150 @@
           </div>
         </section>
 
+        <section id="masked-evidence" class="card">
+          <h2>Masked Transaction Evidence</h2>
+          <p>
+            The table below records the key transaction evidence in portfolio-safe format. Full transaction hashes and wallet addresses are intentionally not displayed.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Time</th>
+                  <th>Network / Protocol</th>
+                  <th>Masked TXID / Hash</th>
+                  <th>From / Source</th>
+                  <th>To / Destination</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Initial Funding</td>
+                  <td>29 Dec 2023 00:13 UTC</td>
+                  <td>Solana</td>
+                  <td><code class="masked">3o8EfzUr...KSvxBh</code></td>
+                  <td><code class="masked">Binance Hot Wallet</code></td>
+                  <td><code class="masked">FHUKzTyp...B5iz</code></td>
+                  <td>Initial funding</td>
+                </tr>
+                <tr>
+                  <td>Solana Transfer</td>
+                  <td>05 Jan 2024 03:24 UTC</td>
+                  <td>Solana</td>
+                  <td><code class="masked">3eRKkrti...8qC7cAx</code></td>
+                  <td><code class="masked">DYFKcauB...DWX9e</code></td>
+                  <td><code class="masked">DFY3xSZP...EDdtNu</code></td>
+                  <td>Approx. 15 WETH equivalent</td>
+                </tr>
+                <tr>
+                  <td>Solana Transfer</td>
+                  <td>05 Jan 2024 03:26 UTC</td>
+                  <td>Solana</td>
+                  <td><code class="masked">3rx7rV9w...RqSTTE</code></td>
+                  <td><code class="masked">DYFKcauB...DWX9e</code></td>
+                  <td><code class="masked">DFY3xSZP...EDdtNu</code></td>
+                  <td>Approx. 12 WETH equivalent</td>
+                </tr>
+                <tr>
+                  <td>Solana Transfer</td>
+                  <td>05 Jan 2024 03:30 UTC</td>
+                  <td>Solana</td>
+                  <td><code class="masked">3epNujqF...3aEa</code></td>
+                  <td><code class="masked">DYFKcauB...DWX9e</code></td>
+                  <td><code class="masked">DFY3xSZP...EDdtNu</code></td>
+                  <td>Approx. 12.29 WETH equivalent</td>
+                </tr>
+                <tr>
+                  <td>Solana Transfer</td>
+                  <td>05 Jan 2024 04:30 UTC</td>
+                  <td>Solana</td>
+                  <td><code class="masked">4ngL7Cef...K1muUz</code></td>
+                  <td><code class="masked">DYFKcauB...DWX9e</code></td>
+                  <td><code class="masked">DFY3xSZP...EDdtNu</code></td>
+                  <td>Approx. 12.063 WETH equivalent</td>
+                </tr>
+                <tr>
+                  <td>Bridge Interaction</td>
+                  <td>14 Jan 2024 21:38 UTC</td>
+                  <td>Wormhole</td>
+                  <td><code class="masked">0xcef23c...99b08</code></td>
+                  <td><code class="masked">0x82fe8720...381eD</code></td>
+                  <td><code class="masked">Wormhole 0xCafd...41CA</code></td>
+                  <td>Bridge-linked activity</td>
+                </tr>
+                <tr>
+                  <td>Across Routing</td>
+                  <td>14 Jan 2024 23:41 UTC</td>
+                  <td>Arbitrum / Across</td>
+                  <td><code class="masked">0xfde969...64e81</code></td>
+                  <td><code class="masked">0xB6B1Cb...067d9</code></td>
+                  <td><code class="masked">0x269727...3f02D</code></td>
+                  <td>15.0000</td>
+                </tr>
+                <tr>
+                  <td>Across Routing</td>
+                  <td>14 Jan 2024 23:49 UTC</td>
+                  <td>Arbitrum / Across</td>
+                  <td><code class="masked">0xe44083...63eb50</code></td>
+                  <td><code class="masked">0xB6B1Cb...067d9</code></td>
+                  <td><code class="masked">0x269727...3f02D</code></td>
+                  <td>15.0000</td>
+                </tr>
+                <tr>
+                  <td>Across Routing</td>
+                  <td>14 Jan 2024 23:57 UTC</td>
+                  <td>Arbitrum / Across</td>
+                  <td><code class="masked">0x0b775b...ea500</code></td>
+                  <td><code class="masked">0xB6B1Cb...067d9</code></td>
+                  <td><code class="masked">0x269727...3f02D</code></td>
+                  <td>15.0000</td>
+                </tr>
+                <tr>
+                  <td>Across Routing</td>
+                  <td>15 Jan 2024 00:36 UTC</td>
+                  <td>Arbitrum / Across</td>
+                  <td><code class="masked">0x064e74...cc2fb</code></td>
+                  <td><code class="masked">0xB6B1Cb...067d9</code></td>
+                  <td><code class="masked">0x269727...3f02D</code></td>
+                  <td>15.0000</td>
+                </tr>
+                <tr>
+                  <td>Across Routing</td>
+                  <td>15 Jan 2024 00:45 UTC</td>
+                  <td>Arbitrum / Across</td>
+                  <td><code class="masked">0xcbd6f9...891d</code></td>
+                  <td><code class="masked">0xB6B1Cb...067d9</code></td>
+                  <td><code class="masked">0x269727...3f02D</code></td>
+                  <td>22.0000</td>
+                </tr>
+                <tr>
+                  <td>Final Deposit</td>
+                  <td>15 Jan 2024 00:58 UTC</td>
+                  <td>Arbitrum</td>
+                  <td><code class="masked">0x7337f7...5c8f</code></td>
+                  <td><code class="masked">0x8AFA85...09C6</code></td>
+                  <td><code class="masked">0xF5d839...F4fde</code></td>
+                  <td>11.0000 / 22.0870</td>
+                </tr>
+                <tr>
+                  <td>Final Deposit</td>
+                  <td>15 Jan 2024 01:06 UTC</td>
+                  <td>Arbitrum</td>
+                  <td><code class="masked">0xf49b61...1c1b</code></td>
+                  <td><code class="masked">0x8AFA85...09C6</code></td>
+                  <td><code class="masked">0x9b8275...16a5f</code></td>
+                  <td>11.0844</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section id="risk-flags" class="card">
           <h2>Risk Flags</h2>
-          <p>
-            The following analytical flags are relevant from an AML, transaction monitoring, and blockchain investigation perspective.
-          </p>
+          <p>The following analytical flags are relevant from an AML, transaction monitoring, and blockchain investigation perspective.</p>
           <div class="flag-grid">
             <div class="flag medium">
               <div class="level">Medium</div>
@@ -815,9 +986,7 @@
 
         <section id="visual-analysis" class="card">
           <h2>Screenshots & Visual Analysis</h2>
-          <p>
-            The screenshots below are integrated as formal exhibits to support the narrative of source tracing, bridge linkage, and final deposit attribution.
-          </p>
+          <p>The screenshots below are integrated as formal exhibits to support the narrative of source tracing, bridge linkage, and final deposit attribution.</p>
           <div class="visual-grid">
             <div class="card image-card">
               <div class="image-wrap">
@@ -826,9 +995,7 @@
               </div>
               <div class="image-body">
                 <h3>Source of Funds Flow</h3>
-                <p class="caption">
-                  This exhibit shows the wider cross-chain route from upstream wallet activity through Wormhole, Ethereum funding, Across Protocol routing, and final exchange-linked endpoints.
-                </p>
+                <p class="caption">This exhibit shows the wider cross-chain route from upstream wallet activity through Wormhole, Ethereum funding, Across Protocol routing, and final exchange-linked endpoints.</p>
               </div>
             </div>
             <div class="card image-card">
@@ -838,9 +1005,7 @@
               </div>
               <div class="image-body">
                 <h3>Deposit Address Mapping</h3>
-                <p class="caption">
-                  This exhibit isolates the post-bridge phase and highlights how intermediary wallets route funds into KuCoin-linked deposit addresses.
-                </p>
+                <p class="caption">This exhibit isolates the post-bridge phase and highlights how intermediary wallets route funds into KuCoin-linked deposit addresses.</p>
               </div>
             </div>
           </div>
