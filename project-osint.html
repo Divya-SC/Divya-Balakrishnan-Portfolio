@@ -10,17 +10,46 @@ body {
   font-family: Arial;
   background:#0c1420;
   color:#f3f7fc;
+  margin:0;
   padding:40px;
 }
 
-h1 { margin-bottom:20px; }
+h1 {
+  margin-bottom:10px;
+}
+
+p {
+  color:#b7c2d4;
+  line-height:1.6;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  margin-top:30px;
+}
+
 .card {
   background:#101927;
+  border:1px solid #1f2a3a;
+  border-radius:12px;
   padding:20px;
-  margin-bottom:15px;
-  border-radius:10px;
 }
-small { color:#8ea0b7; }
+
+small {
+  color:#92a2bd;
+}
+
+h3 {
+  margin:8px 0;
+}
+
+@media(max-width:800px){
+  .grid {
+    grid-template-columns:1fr;
+  }
+}
 </style>
 
 </head>
@@ -29,26 +58,109 @@ small { color:#8ea0b7; }
 <h1>OSINT Challenges & Investigation Methodology</h1>
 
 <p>
-This section highlights OSINT challenges completed using structured investigation techniques.
-No sensitive data or results are disclosed.
+This section highlights OSINT challenges completed using structured investigation techniques across GEOINT, cybercrime attribution, breach data analysis, archive research, and public records.  
+All investigations were conducted using passive, legal open-source intelligence methods.  
+Sensitive findings and results are intentionally excluded.
 </p>
+
+<div class="grid">
 
 <div class="card">
 <small>Challenge #1</small>
 <h3>GEOINT Location Identification</h3>
-<p>Used visual clues and maps to identify location.</p>
+<p><b>Objective:</b> Identify a location from visual clues.</p>
+<p><b>Techniques:</b> GEOINT, environmental analysis</p>
+<p><b>Sources:</b> Google Maps, Street View, reverse image search</p>
 </div>
 
 <div class="card">
 <small>Challenge #2</small>
 <h3>Email Attribution via Repository</h3>
-<p>Analyzed GitHub commits and metadata.</p>
+<p><b>Objective:</b> Trace developer email footprint.</p>
+<p><b>Techniques:</b> GitHub commit analysis</p>
+<p><b>Sources:</b> GitHub, commit metadata</p>
+</div>
+
+<div class="card">
+<small>Challenge #3</small>
+<h3>Public Record Correlation</h3>
+<p><b>Objective:</b> Link identity using public records.</p>
+<p><b>Techniques:</b> Cross-source validation</p>
+<p><b>Sources:</b> Search engines, public records</p>
+</div>
+
+<div class="card">
+<small>Challenge #4</small>
+<h3>Company Address Research</h3>
+<p><b>Objective:</b> Identify historical address data.</p>
+<p><b>Techniques:</b> Registry analysis</p>
+<p><b>Sources:</b> Company records, filings</p>
+</div>
+
+<div class="card">
+<small>Challenge #5</small>
+<h3>Depixelation & Boarding Pass Analysis</h3>
+<p><b>Objective:</b> Recover hidden travel data.</p>
+<p><b>Techniques:</b> Image analysis, reconstruction</p>
+<p><b>Sources:</b> TinEye, Google Images, IATA</p>
+</div>
+
+<div class="card">
+<small>Challenge #6</small>
+<h3>Historical Event Research</h3>
+<p><b>Objective:</b> Identify location and date.</p>
+<p><b>Techniques:</b> Timeline reconstruction</p>
+<p><b>Sources:</b> News, Wayback Machine</p>
+</div>
+
+<div class="card">
+<small>Challenge #7</small>
+<h3>Vehicle Identification</h3>
+<p><b>Objective:</b> Identify vehicle via social media.</p>
+<p><b>Techniques:</b> Username pivoting</p>
+<p><b>Sources:</b> Instagram, image analysis</p>
+</div>
+
+<div class="card">
+<small>Challenge #8</small>
+<h3>Intelligence Case Reconstruction</h3>
+<p><b>Objective:</b> Reconstruct historical intelligence case.</p>
+<p><b>Techniques:</b> Document analysis</p>
+<p><b>Sources:</b> Archives, reports</p>
+</div>
+
+<div class="card">
+<small>Challenge #9</small>
+<h3>Russian Source Research</h3>
+<p><b>Objective:</b> Identify missing details.</p>
+<p><b>Techniques:</b> Language-based search</p>
+<p><b>Sources:</b> Yandex, regional sources</p>
+</div>
+
+<div class="card">
+<small>Challenge #10</small>
+<h3>Identifier Correlation</h3>
+<p><b>Objective:</b> Link email to identifier.</p>
+<p><b>Techniques:</b> Breach data analysis</p>
+<p><b>Sources:</b> Have I Been Pwned</p>
+</div>
+
+<div class="card">
+<small>Challenge #11</small>
+<h3>Social Profile Association</h3>
+<p><b>Objective:</b> Identify linked social account.</p>
+<p><b>Techniques:</b> Email/phone correlation</p>
+<p><b>Sources:</b> Public datasets</p>
 </div>
 
 <div class="card">
 <small>Challenge #12</small>
 <h3>Cybercriminal Attribution</h3>
-<p>Used archive + breach data + social correlation.</p>
+<p><b>Objective:</b> Identify forum user.</p>
+<p><b>Techniques:</b> Username reuse, archive analysis</p>
+<p><b>Sources:</b> Wayback Machine, breach data, social media</p>
+</div>
+
 </div>
 
 </body>
