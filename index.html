@@ -1,3 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divya Balakrishnan — Blockchain & Compliance Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090d;
+    --surface: #0c1017;
+    --surface2: #101620;
+    --border: #1a2535;
+    --accent: #00c9f0;
+    --accent2: #f07030;
+    --accent3: #50e090;
+    --text: #b8ccd8;
+    --muted: #4a6880;
+    --heading: #ddeeff;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,201,240,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,201,240,0.025) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(7,9,13,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--sans); font-weight: 700; font-size: 1rem;
+    color: var(--accent); text-decoration: none; letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.5s 0.15s forwards;
+  }
+  .hero-status::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent3); box-shadow: 0 0 10px var(--accent3);
+    animation: blink 2.2s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+  .hero-name {
+    font-family: var(--sans); font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+    font-weight: 700; color: var(--heading); line-height: 1.0;
+    letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    opacity: 0; animation: fadeUp 0.55s 0.28s forwards;
+  }
+  .hero-name em {
+    font-style: normal; font-weight: 700; color: var(--heading);
+  }
+
+  .hero-role {
+    font-family: var(--sans); font-size: clamp(0.85rem, 1.8vw, 1rem);
+    font-weight: 600; color: var(--accent);
+    margin-bottom: 2rem; letter-spacing: 0.01em;
+    opacity: 0; animation: fadeUp 0.5s 0.42s forwards;
+  }
+  .hero-role .pipe { color: var(--muted); margin: 0 0.5rem; font-weight: 300; }
+
+  .hero-desc {
+    max-width: 600px; font-size: 13px; line-height: 1.85; color: var(--text);
+    margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.5s 0.62s forwards;
+  }
+
+  /* achievement in hero */
+  .hero-award {
+    display: inline-flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid rgba(240,112,48,0.35); border-radius: 4px;
+    background: rgba(240,112,48,0.05); max-width: 580px;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.5s 0.68s forwards;
+  }
+  .hero-award-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .hero-award-text { font-size: 11.5px; color: var(--text); }
+  .hero-award-text strong { color: var(--accent2); font-family: var(--sans); font-weight: 600; }
+
+  .hero-badges {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.2rem;
+    opacity: 0; animation: fadeUp 0.5s 0.78s forwards;
+  }
+  .badge {
+    padding: 0.25rem 0.75rem; border: 1px solid var(--border); border-radius: 2px;
+    font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); background: rgba(0,201,240,0.05); transition: all 0.2s;
+  }
+  .badge:hover { background: rgba(0,201,240,0.12); border-color: var(--accent); }
+  .badge.o { color: var(--accent2); background: rgba(240,112,48,0.05); border-color: rgba(240,112,48,0.3); }
+  .badge.g { color: var(--accent3); background: rgba(80,224,144,0.05); border-color: rgba(80,224,144,0.3); }
+
+  .hero-cta {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.5s 0.9s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.65rem 1.35rem; font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; border-radius: 3px; transition: all 0.2s; cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #000; font-weight: 500; border: none; }
+  .btn-primary:hover { background: #22d8ff; transform: translateY(-1px); }
+  .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-deco {
+    position: absolute; top: 8rem; right: 2.5rem;
+    width: 200px; height: 200px; border: 1px solid var(--border); border-radius: 50%;
+    opacity: 0.35; animation: spin 24s linear infinite;
+  }
+  .hero-deco::after {
+    content: ''; position: absolute; inset: 22px;
+    border: 1px dashed rgba(0,201,240,0.3); border-radius: 50%;
+    animation: spin 12s linear infinite reverse;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* SECTIONS */
+  section {
+    position: relative; z-index: 1; max-width: 1100px; margin: 0 auto;
+    padding: 4.5rem 2.5rem; border-top: 1px solid var(--border);
+  }
+  .sec-eyebrow { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+  .sec-title {
+    font-family: var(--sans); font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700; color: var(--heading); line-height: 1.1; margin-bottom: 2.5rem;
+  }
+
+  /* SKILLS */
+  .skills-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+  .skill-group-title {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent2); margin-bottom: 0.75rem; font-weight: 500;
+  }
+  .skill-list { display: flex; flex-direction: column; gap: 0.35rem; }
+  .skill-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 12px; color: var(--text);
+    padding: 0.35rem 0.6rem; border: 1px solid var(--border); border-radius: 3px;
+    background: var(--surface); transition: all 0.18s;
+  }
+  .skill-item:hover {
+    border-color: var(--accent); color: var(--accent);
+    background: rgba(0,201,240,0.05); transform: translateX(4px);
+  }
+  .skill-item::before { content: '▸'; color: var(--accent); font-size: 8px; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 3px; }
+  .exp-item {
+    display: grid; grid-template-columns: 1fr auto; gap: 1rem;
+    padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+    border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface); position: relative; overflow: hidden;
+    transition: all 0.22s;
+  }
+  .exp-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--border); transition: background 0.22s;
+  }
+  .exp-item:hover { border-color: rgba(0,201,240,0.3); background: var(--surface2); transform: translateX(4px); }
+  .exp-item:hover::before { background: var(--accent); }
+  .exp-company { font-family: var(--sans); font-weight: 700; font-size: 1.05rem; color: var(--heading); margin-bottom: 0.15rem; }
+  .exp-role { font-size: 11px; color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+  .exp-desc { font-size: 12px; color: var(--muted); margin-bottom: 0.75rem; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .exp-tag { padding: 0.1rem 0.45rem; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); }
+  .exp-meta { text-align: right; white-space: nowrap; }
+  .exp-period { font-size: 11px; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+  .exp-duration { font-size: 9.5px; color: var(--border); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
+  .project-card {
+    position: relative; padding: 1.4rem 1.4rem 1.2rem;
+    border: 1px solid var(--border); border-radius: 4px; background: var(--surface);
+    text-decoration: none; display: flex; flex-direction: column; gap: 0.7rem;
+    transition: all 0.22s; overflow: hidden;
+  }
+  .project-card::after {
+    content: ''; position: absolute; top: 0; left: 0; height: 2px; width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    transition: width 0.3s ease;
+  }
+  .project-card:hover { border-color: rgba(0,201,240,0.3); background: var(--surface2); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+  .project-card:hover::after { width: 100%; }
+  .project-num { font-size: 9.5px; color: var(--muted); letter-spacing: 0.18em; }
+  .project-title { font-family: var(--sans); font-weight: 600; font-size: 1rem; color: var(--heading); line-height: 1.3; }
+  .project-desc { font-size: 11.5px; color: var(--muted); flex: 1; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .project-tag { padding: 0.12rem 0.45rem; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
+  .tb { background: rgba(0,201,240,0.1); color: var(--accent); }
+  .to { background: rgba(240,112,48,0.1); color: var(--accent2); }
+  .tg { background: rgba(80,224,144,0.1); color: var(--accent3); }
+  .project-arrow { font-size: 15px; color: var(--muted); align-self: flex-end; transition: color 0.2s, transform 0.2s; }
+  .project-card:hover .project-arrow { color: var(--accent); transform: translate(3px,-3px); }
+
+  /* CREDENTIALS */
+  .cred-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
+  .cred-card {
+    padding: 1.35rem; border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface); text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 0.45rem; transition: all 0.2s;
+  }
+  .cred-card:hover { border-color: rgba(0,201,240,0.4); background: var(--surface2); }
+  .cred-icon { font-size: 1.4rem; }
+  .cred-name { font-family: var(--sans); font-weight: 600; font-size: 0.95rem; color: var(--heading); }
+  .cred-issuer { font-size: 11px; color: var(--accent); }
+  .cred-link {
+    margin-top: auto; padding-top: 0.5rem;
+    font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); display: flex; align-items: center; gap: 0.3rem; transition: color 0.2s;
+  }
+  .cred-card:hover .cred-link { color: var(--accent); }
+
+  /* EDUCATION */
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
+  .edu-card {
+    padding: 1.35rem; border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface); text-decoration: none; color: inherit; display: block; transition: all 0.2s;
+  }
+  .edu-card:hover { border-color: rgba(80,224,144,0.4); background: var(--surface2); }
+  .edu-degree { font-family: var(--sans); font-weight: 600; font-size: 1rem; color: var(--heading); margin-bottom: 0.25rem; }
+  .edu-school { font-size: 11px; color: var(--accent3); margin-bottom: 0.6rem; }
+  .edu-desc { font-size: 11px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 1.4rem; border: 1px solid var(--border); border-radius: 4px;
+    background: var(--surface); color: var(--text); text-decoration: none;
+    font-size: 12px; transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,201,240,0.05); }
+
+  /* FOOTER */
+  footer {
+    position: relative; z-index: 1; text-align: center; padding: 2rem;
+    border-top: 1px solid var(--border); font-size: 10.5px; color: var(--muted); letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0.85rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 3rem 1.25rem; }
+    .hero { padding: 6rem 1.25rem 3rem; }
+    .hero-deco { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#top">Divya B.</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
 <!-- HERO -->
 <div id="top" class="hero">
   <div class="hero-deco"></div>
@@ -6,111 +327,89 @@
 
   <h1 class="hero-name">Divya <em>Balakrishnan</em></h1>
 
-  <p class="hero-role">
-    Crypto Compliance &amp; Financial Operations Professional
-    <span class="pipe">|</span>
-    Blockchain Investigation Trainee focused on on-chain analysis and transaction tracing
-  </p>
+  <p class="hero-role">Fiat &amp; Crypto Finance <span class="pipe">|</span> Compliance, Operations &amp; Blockchain Analysis</p>
 
   <p class="hero-desc">
-    Compliance and finance professional with 12+ years of experience across financial operations,
-    crypto-related workflows, onboarding review, transaction monitoring support,
-    and regulatory coordination within international and digital asset environments.
-
-    Currently building practical expertise in blockchain investigations,
-    on-chain transaction analysis, exchange attribution, cross-chain tracing,
-    and crypto financial crime analysis through independent analytical projects
-    and blockchain investigation methodologies.
+    Finance and compliance professional with 10+ years of experience in traditional finance — spanning accounting,
+    treasury operations, fund accounting, and financial reporting — and 3+ years working across DeFi and crypto operations,
+    including blockchain analysis, wallet reconciliation, transaction monitoring, and AML compliance support.
+    Open to local and global opportunities across onsite, hybrid, and remote environments.
   </p>
 
   <div class="hero-award">
     <span class="hero-award-icon">🏆</span>
-
     <div class="hero-award-text">
-      <strong>Runner-Up — JP Intelligence On-Chain Crypto Tracing Challenge</strong><br>
-
-      Recognised for a structured and well-documented investigation methodology
-      focused on blockchain tracing, transaction analysis, and fund-flow reconstruction.
+      <strong>Runner-Up — JP Intelligence on Chain Crypto Tracing Challenge</strong><br>
+      Recognised for a clear, concise, and easy-to-follow investigation submission in the March 2025 Crypto Tracing Challenge by Intelligence On Chain.
     </div>
   </div>
 
   <div class="hero-badges">
     <span class="badge">Blockchain Analysis</span>
-    <span class="badge">Transaction Tracing</span>
-    <span class="badge">Cross-Chain Analysis</span>
+    <span class="badge">Crypto Reconciliation</span>
+    <span class="badge">Transaction Monitoring</span>
     <span class="badge o">AML / Compliance</span>
-    <span class="badge o">Transaction Monitoring</span>
+    <span class="badge o">FINTRAC · VQF</span>
     <span class="badge g">OSINT</span>
-    <span class="badge g">Exchange Attribution</span>
+    <span class="badge g">Fund Flow Tracing</span>
   </div>
 
   <div class="hero-cta">
-    <a class="btn btn-primary" href="cv.pdf" download>
-      ⬇ Download CV
-    </a>
-
-    <a class="btn btn-outline" href="#projects">
-      View Projects
-    </a>
+    <a class="btn btn-primary" href="cv.pdf" download>⬇ Download CV</a>
+    <a class="btn btn-outline" href="#projects">View Projects</a>
   </div>
 </div>
 
 <!-- SKILLS -->
 <section id="skills" class="reveal">
-
   <h2 class="sec-title">Skills</h2>
-
   <div class="skills-cols">
 
     <div>
       <div class="skill-group-title">Blockchain & Investigation</div>
-
       <div class="skill-list">
         <div class="skill-item">Blockchain Analysis</div>
         <div class="skill-item">Fund Flow Tracing</div>
         <div class="skill-item">Wallet Analysis & Clustering</div>
-        <div class="skill-item">Cross-Chain Tracing</div>
-        <div class="skill-item">Exchange Attribution</div>
+        <div class="skill-item">Bridging Analysis</div>
+        <div class="skill-item">Transaction Monitoring</div>
         <div class="skill-item">OSINT Investigations</div>
       </div>
     </div>
 
     <div>
       <div class="skill-group-title">Compliance & AML</div>
-
       <div class="skill-list">
         <div class="skill-item">AML / KYC</div>
-        <div class="skill-item">Customer Onboarding Review</div>
-        <div class="skill-item">Transaction Monitoring</div>
-        <div class="skill-item">Documentation Verification</div>
-        <div class="skill-item">Regulatory Coordination</div>
-        <div class="skill-item">Compliance Operations</div>
+        <div class="skill-item">End-to-End Onboarding</div>
+        <div class="skill-item">Regulatory Documentation</div>
+        <div class="skill-item">FINTRAC MSB (Canada)</div>
+        <div class="skill-item">Swiss VQF AML</div>
+        <div class="skill-item">SAR / STR Reporting</div>
       </div>
     </div>
 
     <div>
       <div class="skill-group-title">Finance & Accounting</div>
-
       <div class="skill-list">
-        <div class="skill-item">Crypto Reconciliation</div>
+        <div class="skill-item">Fiat & Crypto Reconciliation</div>
         <div class="skill-item">Financial Reporting</div>
         <div class="skill-item">Fund Accounting</div>
-        <div class="skill-item">Liquidity Monitoring</div>
         <div class="skill-item">Treasury Operations</div>
+        <div class="skill-item">Payroll Operations</div>
         <div class="skill-item">Investment Analysis</div>
       </div>
     </div>
 
     <div>
       <div class="skill-group-title">Tools & Platforms</div>
-
       <div class="skill-list">
         <div class="skill-item">Chainalysis Reactor</div>
-        <div class="skill-item">Arkham Intelligence</div>
-        <div class="skill-item">Etherscan · Solscan · TronScan</div>
+        <div class="skill-item">Etherscan · Arbiscan · Solscan</div>
         <div class="skill-item">Bitwave</div>
-        <div class="skill-item">QuickBooks · Excel</div>
-        <div class="skill-item">OSINT Research Tools</div>
+        <div class="skill-item">Excel · Power BI</div>
+        <div class="skill-item">QuickBooks · Xero</div>
+        <div class="skill-item">Google Dorking · Wayback Machine</div>
       </div>
     </div>
 
@@ -119,147 +418,80 @@
 
 <!-- EXPERIENCE -->
 <section id="experience" class="reveal">
-
   <h2 class="sec-title">Professional Experience</h2>
-
   <div class="exp-list">
 
-    <!-- Independent -->
     <div class="exp-item">
-
       <div>
-
-        <div class="exp-company">Independent Practice</div>
-
-        <div class="exp-role">
-          Crypto Reconciliation &amp; Blockchain Analysis
-        </div>
-
-        <div class="exp-desc">
-          Managed crypto reconciliation, transaction-level financial review,
-          DeFi classification, wallet analysis, and blockchain tracing activities
-          involving BTC, ETH, TRON, Solana, and EVM-based networks.
-
-          Conducted independent blockchain investigation and OSINT-based analytical projects
-          focused on transaction tracing, exchange attribution,
-          and cross-chain fund flow analysis.
-        </div>
-
+        <div class="exp-company">Independent / Freelance</div>
+        <div class="exp-role">Blockchain Accountant · Crypto Reconciliation & Blockchain Analysis</div>
+        <div class="exp-desc">Crypto accounting, reconciliation, transaction validation, and blockchain data analysis. Wallet and exchange reconciliations, fund flow analysis across multiple networks.</div>
         <div class="exp-tags">
-          <span class="exp-tag">Blockchain Analysis</span>
-          <span class="exp-tag">Fund Flow Tracing</span>
-          <span class="exp-tag">Wallet Analysis</span>
-          <span class="exp-tag">Cross-Chain Analysis</span>
-        </div>
-
-      </div>
-
-      <div class="exp-meta">
-        <span class="exp-period">2025 – Present</span>
-        <span class="exp-duration">Independent Practice</span>
-      </div>
-
-    </div>
-
-    <!-- SwiftX -->
-    <div class="exp-item">
-
-      <div>
-
-        <div class="exp-company">SwiftX DLT</div>
-
-        <div class="exp-role">
-          Compliance &amp; Finance Operations
-        </div>
-
-        <div class="exp-desc">
-          Handled onboarding operations, documentation verification,
-          transaction monitoring reporting, wallet review,
-          and compliance-related operational workflows within a digital asset environment,
-          including support aligned with Swiss VQF AML and FINTRAC MSB frameworks.
-        </div>
-
-        <div class="exp-tags">
-          <span class="exp-tag">Onboarding Review</span>
-          <span class="exp-tag">Transaction Monitoring</span>
           <span class="exp-tag">Wallet Review</span>
-          <span class="exp-tag">Compliance Operations</span>
+          <span class="exp-tag">Bridging Analysis</span>
+          <span class="exp-tag">Fund Flow</span>
+          <span class="exp-tag">Blockchain Explorers</span>
         </div>
-
       </div>
-
       <div class="exp-meta">
-        <span class="exp-period">2025 – Present</span>
-        <span class="exp-duration">Crypto Compliance</span>
+        <span class="exp-period">Jan 2026 – Mar 2026</span>
+        <span class="exp-duration">3 months</span>
       </div>
-
     </div>
 
-    <!-- B2Broker -->
     <div class="exp-item">
-
       <div>
-
-        <div class="exp-company">B2Broker</div>
-
-        <div class="exp-role">
-          Senior Finance Officer
-        </div>
-
-        <div class="exp-desc">
-          Managed operational finance activities within a crypto and fintech environment,
-          supporting reporting, payroll operations, licensing coordination,
-          compliance documentation, and crypto-related financial workflows.
-        </div>
-
+        <div class="exp-company">SwiftX DLT</div>
+        <div class="exp-role">Compliance & Finance Operations Analyst</div>
+        <div class="exp-desc">End-to-end onboarding, compliance documentation, transaction monitoring, and wallet reconciliation across crypto operations. Swiss VQF AML and FINTRAC MSB regulatory alignment.</div>
         <div class="exp-tags">
-          <span class="exp-tag">Crypto Operations</span>
+          <span class="exp-tag">End-to-End Onboarding</span>
+          <span class="exp-tag">Wallet Reconciliation</span>
+          <span class="exp-tag">Transaction Monitoring</span>
+          <span class="exp-tag">VQF AML</span>
+          <span class="exp-tag">FINTRAC MSB</span>
+        </div>
+      </div>
+      <div class="exp-meta">
+        <span class="exp-period">2025 – 2026</span>
+        <span class="exp-duration">~1 year</span>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-company">B2Broker</div>
+        <div class="exp-role">Finance Manager → Compliance Associate → Payroll Operations</div>
+        <div class="exp-desc">Financial operations across fiat and crypto accounts — reconciliations, reporting, payroll, VAT-related processes, and operational compliance documentation.</div>
+        <div class="exp-tags">
+          <span class="exp-tag">Fiat & Crypto Accounts</span>
           <span class="exp-tag">Financial Reporting</span>
           <span class="exp-tag">Payroll Operations</span>
           <span class="exp-tag">Compliance Support</span>
         </div>
-
       </div>
-
       <div class="exp-meta">
         <span class="exp-period">2022 – 2025</span>
-        <span class="exp-duration">3 Years</span>
+        <span class="exp-duration">3 years</span>
       </div>
-
     </div>
 
-    <!-- Unity -->
     <div class="exp-item">
-
       <div>
-
         <div class="exp-company">Unity Consulting</div>
-
-        <div class="exp-role">
-          Financial Operations &amp; Investment Support
-        </div>
-
-        <div class="exp-desc">
-          Supported international financial operations involving offshore entities,
-          investment portfolios, banking relationships, liquidity management,
-          audit coordination, due diligence documentation,
-          and multi-jurisdiction financial reporting.
-        </div>
-
+        <div class="exp-role">Admin / Accounts → Accountant → Fund Accountant → Investment Analyst</div>
+        <div class="exp-desc">Financial reporting, treasury operations, fund accounting, reconciliations, and investment analysis across multi-entity operations. Core finance foundation built over 8 years.</div>
         <div class="exp-tags">
           <span class="exp-tag">Fund Accounting</span>
           <span class="exp-tag">Treasury Operations</span>
           <span class="exp-tag">Investment Analysis</span>
-          <span class="exp-tag">Financial Reporting</span>
+          <span class="exp-tag">Reconciliation</span>
         </div>
-
       </div>
-
       <div class="exp-meta">
         <span class="exp-period">2014 – 2022</span>
-        <span class="exp-duration">8 Years</span>
+        <span class="exp-duration">8 years</span>
       </div>
-
     </div>
 
   </div>
@@ -267,161 +499,161 @@
 
 <!-- PROJECTS -->
 <section id="projects" class="reveal">
-
   <h2 class="sec-title">Blockchain Investigation Projects</h2>
-
   <div class="projects-grid">
 
-    <!-- Project 1 -->
     <a href="CrossChain_FundFlow.pdf" target="_blank" class="project-card">
-
       <div class="project-num">01 / Investigation</div>
-
-      <div class="project-title">
-        Cross-Chain Fund Flow Analysis &amp; Source of Funds Review
-      </div>
-
-      <div class="project-desc">
-        Cross-chain blockchain investigation involving transaction tracing across Solana,
-        Ethereum, and Arbitrum ecosystems through Wormhole and Across Protocol bridge infrastructure
-        into exchange-linked destination wallets.
-      </div>
-
+      <div class="project-title">Cross-Chain Fund Flow Investigation</div>
+      <div class="project-desc">Traced cross-chain fund movements across blockchain networks, identifying source flows, bridge activity, and transaction-level linkages across multiple protocols.</div>
       <div class="project-tags">
-        <span class="project-tag tb">Cross-Chain</span>
+        <span class="project-tag tb">Multi-chain</span>
         <span class="project-tag tb">Bridge Analysis</span>
         <span class="project-tag to">Fund Flow</span>
       </div>
-
       <span class="project-arrow">↗</span>
     </a>
 
-    <!-- Project 2 -->
     <a href="USDT_Theft_Flow.pdf" target="_blank" class="project-card">
-
       <div class="project-num">02 / Investigation</div>
-
-      <div class="project-title">
-        USDT Theft Flow Analysis &amp; Exchange Deposit Review
-      </div>
-
-      <div class="project-desc">
-        Investigation analysing the theft and subsequent routing of 100,042 USDT
-        across intermediary wallets, layered transaction movement,
-        consolidation behaviour, and exchange-linked routing patterns.
-      </div>
-
+      <div class="project-title">USDT Theft & Exchange Attribution Analysis</div>
+      <div class="project-desc">Reviewed stolen USDT movement through intermediary wallets and consolidation activity linked to a centralised exchange cluster. Attribution traced end-to-end.</div>
       <div class="project-tags">
         <span class="project-tag to">USDT</span>
         <span class="project-tag to">Theft Tracing</span>
-        <span class="project-tag tb">Exchange Attribution</span>
+        <span class="project-tag tb">CEX Attribution</span>
       </div>
-
       <span class="project-arrow">↗</span>
     </a>
 
-    <!-- Project 3 -->
     <a href="TornadoCash_Exposure.pdf" target="_blank" class="project-card">
-
       <div class="project-num">03 / Investigation</div>
-
-      <div class="project-title">
-        Tornado Cash Exposure &amp; Laundering Flow Investigation
-      </div>
-
-      <div class="project-desc">
-        Blockchain investigation examining Tornado Cash withdrawal behaviour,
-        intermediary wallet routing, laundering flow continuity,
-        clustering analysis, and downstream routing activity on Ethereum.
-      </div>
-
+      <div class="project-title">Tornado Cash Laundering Pattern Review</div>
+      <div class="project-desc">Examined Tornado Cash withdrawals, post-mixer routing, and laundering indicators across linked wallet activity. Identified layering patterns and downstream flows.</div>
       <div class="project-tags">
         <span class="project-tag to">Mixer Analysis</span>
-        <span class="project-tag to">Laundering Flow</span>
+        <span class="project-tag to">Laundering Pattern</span>
+        <span class="project-tag tb">AML</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </a>
+
+    <a href="MemeToken_Launch.pdf" target="_blank" class="project-card">
+      <div class="project-num">04 / Investigation</div>
+      <div class="project-title">Meme Token Launch Investigation</div>
+      <div class="project-desc">Investigated suspicious meme token launch activity including wallet clustering, coordinated buy patterns, and potential insider manipulation or rug pull indicators.</div>
+      <div class="project-tags">
+        <span class="project-tag tg">Token Analysis</span>
+        <span class="project-tag to">Market Manipulation</span>
         <span class="project-tag tb">Wallet Clustering</span>
       </div>
-
       <span class="project-arrow">↗</span>
     </a>
 
-    <!-- Project 4 -->
-    <a href="MemeToken_Launch.pdf" target="_blank" class="project-card">
-
-      <div class="project-num">04 / Investigation</div>
-
-      <div class="project-title">
-        Coordinated Meme Token Launch Investigation
-      </div>
-
-      <div class="project-desc">
-        Comprehensive blockchain investigation analysing coordinated wallet activity,
-        bundled transaction execution, metadata linkage,
-        promotional infrastructure, and cross-chain liquidity movement
-        across Solana and Ethereum ecosystems.
-      </div>
-
-      <div class="project-tags">
-        <span class="project-tag tg">Wallet Clustering</span>
-        <span class="project-tag to">Liquidity Movement</span>
-        <span class="project-tag tb">OSINT</span>
-      </div>
-
-      <span class="project-arrow">↗</span>
-    </a>
-
-    <!-- Project 5 -->
     <a href="PrivateKey_Compromise.pdf" target="_blank" class="project-card">
-
       <div class="project-num">05 / Investigation</div>
-
-      <div class="project-title">
-        Private Key Compromise &amp; Multi-Chain Fund Flow Investigation
-      </div>
-
-      <div class="project-desc">
-        Structured blockchain investigation examining unauthorized wallet-draining activity,
-        bridge interactions, TRON stablecoin movement,
-        Bitcoin peeling-chain behaviour,
-        and downstream exchange-linked exposure analysis.
-      </div>
-
+      <div class="project-title">Private Key Compromise Analysis</div>
+      <div class="project-desc">Analysed wallet drainage following a private key compromise event, mapping fund movement velocity, destination wallets, and exchange deposit attribution.</div>
       <div class="project-tags">
-        <span class="project-tag to">Wallet Drainage</span>
-        <span class="project-tag tb">Cross-Chain</span>
-        <span class="project-tag to">UTXO Tracing</span>
+        <span class="project-tag to">Key Compromise</span>
+        <span class="project-tag tb">Wallet Drainage</span>
+        <span class="project-tag to">Incident Response</span>
       </div>
-
       <span class="project-arrow">↗</span>
     </a>
 
-    <!-- Project 6 -->
     <a href="OSINT_GEOINT_Challenges.pdf" target="_blank" class="project-card">
-
       <div class="project-num">06 / OSINT</div>
-
-      <div class="project-title">
-        OSINT, GEOINT &amp; Intelligence Investigation Challenges
-      </div>
-
-      <div class="project-desc">
-        Completed practical OSINT and GEOINT investigation challenges
-        focused on attribution analysis, metadata review,
-        infrastructure analysis, geolocation techniques,
-        and behavioural intelligence methodologies.
-      </div>
-
+      <div class="project-title">OSINT & GEOINT Challenges</div>
+      <div class="project-desc">Completed challenges across GEOINT, cybercrime attribution, public-record research, archive analysis, and digital footprint tracing using ethical investigation methodology.</div>
       <div class="project-tags">
-        <span class="project-tag tg">OSINT</span>
         <span class="project-tag tg">GEOINT</span>
-        <span class="project-tag tb">Attribution</span>
+        <span class="project-tag tg">OSINT</span>
+        <span class="project-tag tg">Attribution</span>
       </div>
-
       <span class="project-arrow">↗</span>
     </a>
 
   </div>
 </section>
 
+<!-- CREDENTIALS -->
+<section id="credentials" class="reveal">
+  <h2 class="sec-title">Credentials & Certifications</h2>
+  <div class="cred-grid">
+
+    <a href="CAMS.pdf" target="_blank" class="cred-card" title="View CAMS Credential">
+      <div class="cred-icon">🛡</div>
+      <div class="cred-name">CAMS</div>
+      <div class="cred-issuer">Certified Anti-Money Laundering Specialist · ACAMS</div>
+      <div class="cred-link">View Credential ↗</div>
+    </a>
+
+    <a href="CRC.pdf" target="_blank" class="cred-card" title="View Chainalysis Reactor Certification">
+      <div class="cred-icon">⛓</div>
+      <div class="cred-name">Chainalysis Reactor Certified</div>
+      <div class="cred-issuer">Blockchain Transaction Analysis · Chainalysis</div>
+      <div class="cred-link">View Credential ↗</div>
+    </a>
+
+    <a href="Onchain%20Investigation%20L1%20%26%20L2.pdf" target="_blank" class="cred-card" title="View Blockchain & OSINT Investigations">
+      <div class="cred-icon">🔎</div>
+      <div class="cred-name">Blockchain & OSINT Investigations</div>
+      <div class="cred-issuer">Level 1 & Level 2 · Investigation Methodology & Digital Forensics</div>
+      <div class="cred-link">View Credentials ↗</div>
+    </a>
+
+    <a href="G-FCCI.pdf" target="_blank" class="cred-card" title="View G-FCCI Credential">
+      <div class="cred-icon">🌐</div>
+      <div class="cred-name">G-FCCI</div>
+      <div class="cred-issuer">Globally Certified Financial Crime Compliance Investigator</div>
+      <div class="cred-link">View Credential ↗</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="reveal">
+  <h2 class="sec-title">Education</h2>
+  <div class="edu-grid">
+
+    <a href="MBA.pdf" target="_blank" class="edu-card" title="View Qualification">
+      <div class="edu-degree">MBA in Finance & Banking</div>
+      <div class="edu-school">Collège de Paris</div>
+      <div class="edu-desc">Postgraduate focus on financial systems, banking operations, and international finance management.</div>
+    </a>
+
+    <a href="ACCA.pdf" target="_blank" class="edu-card" title="View ACCA Qualification">
+      <div class="edu-degree">Diploma in Accounting & Business Management</div>
+      <div class="edu-school">ACCA Pathway</div>
+      <div class="edu-desc">Professional accounting qualification covering financial reporting, management accounting, and business strategy.</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="reveal">
+  <h2 class="sec-title">Get in Touch</h2>
+  <div class="contact-row">
+    <a class="contact-link" href="mailto:dbbdivya@gmail.com">✉ &nbsp;dbbdivya@gmail.com</a>
+    <a class="contact-link" href="https://linkedin.com" target="_blank">🔗 &nbsp;LinkedIn Profile</a>
+    <a class="contact-link" href="cv.pdf" download>⬇ &nbsp;Download CV</a>
+  </div>
+</section>
+
 <footer>
-  © 2026 Divya Balakrishnan · Crypto Compliance · Blockchain Analysis · Transaction Tracing
+  © 2026 Divya Balakrishnan &nbsp;·&nbsp; Blockchain Analysis · Compliance · OSINT
 </footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+</script>
+</body>
+</html>
