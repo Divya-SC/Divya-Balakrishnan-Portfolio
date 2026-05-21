@@ -111,14 +111,51 @@
   }
 
   /* ── Hero ── */
-  #top {
-    padding: 5rem 0 4rem;
-  }
+  #top { padding: 4rem 0; }
   .hero-inner {
     max-width: var(--max);
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 5vw, 3rem);
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 3rem;
+    align-items: start;
   }
+  .hero-left {}
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  /* Award card */
+  .award-badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-bdr);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+  .award-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+  .award-text { font-size: 0.78rem; color: var(--text2); line-height: 1.55; }
+  .award-text strong { color: var(--gold); font-weight: 600; display: block; margin-bottom: 0.25rem; }
+
+  /* Location card */
+  .hero-location {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    color: var(--text2);
+  }
+  .hero-location span { color: var(--accent2); font-size: 1rem; }
 
   .hero-eyebrow {
     font-family: var(--font-mono);
@@ -152,22 +189,6 @@
     margin-bottom: 1.8rem;
     font-style: italic;
   }
-
-  /* Award badge */
-  .award-badge {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    background: var(--gold-dim);
-    border: 1px solid var(--gold-bdr);
-    border-radius: var(--radius);
-    padding: 0.75rem 1rem;
-    margin-bottom: 1.8rem;
-    max-width: 580px;
-  }
-  .award-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
-  .award-text { font-size: 0.82rem; color: var(--text2); line-height: 1.5; }
-  .award-text strong { color: var(--accent); font-weight: 600; }
 
   /* Summary */
   .hero-summary {
@@ -259,7 +280,7 @@
   /* ── Skills grid ── */
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     padding-bottom: 4rem;
   }
@@ -405,7 +426,7 @@
   /* ── Projects ── */
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
     padding-bottom: 4rem;
   }
@@ -513,9 +534,9 @@
   /* ── Credentials ── */
   .creds-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-    padding-bottom: 4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    padding-bottom: 3rem;
   }
   .cred-card {
     background: var(--bg2);
@@ -621,7 +642,24 @@
   }
 
   /* ── Responsive ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (max-width: 900px) {
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 700px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .creds-grid { grid-template-columns: 1fr; }
+    .edu-grid { grid-template-columns: 1fr; }
     .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
     .exp-responsibilities ul { grid-template-columns: 1fr; }
     .nav-links { display: none; }
@@ -647,40 +685,55 @@
 <!-- HERO -->
 <section id="top">
   <div class="hero-inner">
-    <p class="hero-eyebrow">Blockchain & Compliance Analyst</p>
-    <h1 class="hero-name">Divya Balakrishnan</h1>
-    <p class="hero-title">Fiat & Crypto Finance | Compliance, Operations & Blockchain Analysis</p>
 
-    <div class="award-badge">
-      <span class="award-icon">🏆</span>
-      <p class="award-text">
-        <strong>Runner-Up — JP Intelligence on Chain Crypto Tracing Challenge</strong><br>
-        Recognised for a clear, concise, and easy-to-follow investigation submission in the March 2025 Crypto Tracing Challenge by Intelligence On Chain.
+    <!-- LEFT -->
+    <div class="hero-left">
+      <p class="hero-eyebrow">Blockchain & Compliance Analyst</p>
+      <h1 class="hero-name">Divya Balakrishnan</h1>
+      <p class="hero-title">Fiat & Crypto Finance | Compliance, Operations & Blockchain Analysis</p>
+
+      <p class="hero-summary">
+        Finance and compliance professional with 10+ years of experience in traditional finance — spanning accounting,
+        treasury operations, fund accounting, and financial reporting — and 3+ years working across DeFi and crypto operations,
+        including blockchain analysis, wallet reconciliation, transaction monitoring, and AML compliance support.
+        <span class="building-note">Currently building hands-on expertise in blockchain investigations, on-chain transaction tracing, exchange attribution, and cross-chain fund flow analysis through independent analytical projects and structured investigation methodologies.</span>
+        Open to local and global opportunities across onsite, hybrid, and remote environments.
       </p>
+
+      <div class="pills">
+        <span class="pill">Blockchain Analysis</span>
+        <span class="pill">Crypto Reconciliation</span>
+        <span class="pill">Transaction Monitoring</span>
+        <span class="pill">AML / Compliance</span>
+        <span class="pill">FINTRAC · VQF</span>
+        <span class="pill">OSINT</span>
+        <span class="pill">Fund Flow Tracing</span>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="cv.pdf" class="btn btn-primary">⬇ Download CV</a>
+        <a href="#projects" class="btn btn-outline">View Projects</a>
+      </div>
     </div>
 
-    <p class="hero-summary">
-      Finance and compliance professional with 10+ years of experience in traditional finance — spanning accounting,
-      treasury operations, fund accounting, and financial reporting — and 3+ years working across DeFi and crypto operations,
-      including blockchain analysis, wallet reconciliation, transaction monitoring, and AML compliance support.
-      <span class="building-note">Currently building hands-on expertise in blockchain investigations, on-chain transaction tracing, exchange attribution, and cross-chain fund flow analysis through independent analytical projects and structured investigation methodologies.</span>
-      Open to local and global opportunities across onsite, hybrid, and remote environments.
-    </p>
+    <!-- RIGHT -->
+    <div class="hero-right">
 
-    <div class="pills">
-      <span class="pill">Blockchain Analysis</span>
-      <span class="pill">Crypto Reconciliation</span>
-      <span class="pill">Transaction Monitoring</span>
-      <span class="pill">AML / Compliance</span>
-      <span class="pill">FINTRAC · VQF</span>
-      <span class="pill">OSINT</span>
-      <span class="pill">Fund Flow Tracing</span>
+      <div class="award-badge">
+        <span class="award-icon">🏆</span>
+        <p class="award-text">
+          <strong>Runner-Up — JP Intelligence on Chain</strong>
+          Recognised for a clear, concise investigation submission in the March 2025 Crypto Tracing Challenge.
+        </p>
+      </div>
+
+      <div class="hero-location">
+        <span>✉</span>
+        <span>dbbdivya@gmail.com</span>
+      </div>
+
     </div>
 
-    <div class="hero-ctas">
-      <a href="cv.pdf" class="btn btn-primary">⬇ Download CV</a>
-      <a href="#projects" class="btn btn-outline">View Projects</a>
-    </div>
   </div>
 </section>
 
@@ -690,7 +743,7 @@
 <section id="skills">
   <div class="wrap">
     <div class="section-header">
-      <span class="section-label">01</span>
+      
       <h2 class="section-title">Skills & Tools</h2>
     </div>
     <div class="skills-grid">
@@ -781,7 +834,7 @@
 <section id="experience">
   <div class="wrap">
     <div class="section-header">
-      <span class="section-label">02</span>
+      
       <h2 class="section-title">Professional Experience</h2>
     </div>
     <div class="experience-list">
@@ -927,7 +980,7 @@
 <section id="projects">
   <div class="wrap">
     <div class="section-header">
-      <span class="section-label">03</span>
+      
       <h2 class="section-title">Blockchain Investigation Projects</h2>
     </div>
     <div class="projects-grid">
@@ -1087,7 +1140,7 @@
 <section id="credentials">
   <div class="wrap">
     <div class="section-header">
-      <span class="section-label">04</span>
+      
       <h2 class="section-title">Credentials & Certifications</h2>
     </div>
     <div class="creds-grid">
@@ -1124,7 +1177,7 @@
 
     <!-- Education -->
     <div class="section-header" style="padding-top: 2rem;">
-      <span class="section-label">05</span>
+      
       <h2 class="section-title">Education</h2>
     </div>
     <div class="edu-grid">
@@ -1148,7 +1201,7 @@
 <section id="contact">
   <div class="wrap">
     <div class="section-header">
-      <span class="section-label">06</span>
+      
       <h2 class="section-title">Get in Touch</h2>
     </div>
     <div class="contact-grid">
