@@ -30,7 +30,7 @@
     --font-body:'DM Sans', system-ui, sans-serif;
     --font-mono:'IBM Plex Mono', monospace;
     --radius:   6px;
-    --max:      1060px;
+    --max:      1280px;
     --c1: #34D399; --c1d: rgba(52,211,153,0.08);  --c1b: rgba(52,211,153,0.2);
     --c2: #22D3EE; --c2d: rgba(34,211,238,0.08);  --c2b: rgba(34,211,238,0.2);
     --c3: #E8A838; --c3d: rgba(232,168,56,0.08);  --c3b: rgba(232,168,56,0.2);
@@ -65,7 +65,7 @@
   .section-sub { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; display: block; }
 
   /* HERO */
-  #top { padding: 2rem 0 2rem; }
+  #top { padding: 1rem 0 1rem; }
   .hero-inner { max-width: var(--max); margin: 0 auto; padding: 0 clamp(1.5rem,5vw,3rem); display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; align-items: center; }
   .hero-right { display: flex; flex-direction: column; gap: 0.75rem; }
   .hero-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; font-weight: 500; }
@@ -257,6 +257,64 @@
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em; background: var(--bg3); }
 
+.connect-card:hover { border-color: var(--accent); }
+
+/* NEW JOURNEY ROADMAP CSS HERE */
+
+.journey-roadmap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.journey-roadmap::before {
+  content: "";
+  position: absolute;
+  top: 42px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(255,255,255,0.12);
+  z-index: 0;
+}
+
+.roadmap-step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  flex: 1;
+}
+
+.roadmap-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: var(--bg2);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.roadmap-title {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+
+.roadmap-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
   /* RESPONSIVE */
   @media (max-width: 900px) {
     .skills-grid, .cp-grid, .projects-grid, .creds-groups, .areas-grid { grid-template-columns: repeat(2,1fr); }
@@ -298,14 +356,7 @@
       <h1 class="hero-name">Divya Balakrishnan</h1>
       <p class="hero-title">Understanding How Money Moves, Where Risk Emerges, and Who Controls It</p>
       <p class="hero-summary">My career started in traditional finance, but looking back, the common thread was never just finance itself. It was understanding how businesses operate, how money moves, who controls it, and where risk exists. Over the years, that took me from banking relationships, corporate structures, and investment operations into digital assets, compliance, AML, transaction monitoring, and financial crime. Today, I continue building on that experience through blockchain analysis, OSINT research, and projects focused on understanding risk across both traditional and digital financial systems.</p>
-      <div class="hero-ctas">
-        <a href="cv.pdf" class="btn btn-primary">⬇ Download CV</a>
-        <a href="#investigations" class="btn btn-outline">View Portfolio</a>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <!-- Recognition -->
+            <!-- Recognition -->
       <div class="rec-card">
         <span class="rec-card-title">🏆 Recognition</span>
         <div class="rec-row">
@@ -330,6 +381,14 @@
           </div>
         </div>
       </div>
+      <div class="hero-ctas">
+        <a href="cv.pdf" class="btn btn-primary">⬇ Download CV</a>
+        <a href="#investigations" class="btn btn-outline">View Portfolio</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+
 
       <!-- Experience Snapshot -->
       <div class="snap-card">
@@ -362,15 +421,54 @@
     <div class="section-header">
       <span class="section-sub">From Traditional Finance to Financial Crime &amp; Web3</span>
       <h2 class="section-title">📈 My Journey</h2>
+    <div class="journey-intro">
+    <p>My career started in traditional finance, but looking back, the common thread was never just finance itself...</p>
+</div>
+
+<!-- NEW ROADMAP -->
+
+<div class="journey-roadmap">
+
+    <div class="roadmap-step" onclick="showJourney('unity')">
+        <div class="roadmap-icon">🏦</div>
+        <div class="roadmap-title">Traditional Finance</div>
+        <div class="roadmap-sub">Unity Consulting Services</div>
     </div>
-    <p class="journey-intro">Looking back, each role added another piece to the puzzle. What started with banking relationships, corporate structures, and investment operations gradually expanded into digital assets, compliance, transaction monitoring, and financial crime. The journey was never planned this way, but understanding how money moves, who controls it, and where risk emerges became the common thread throughout my career.</p>
+
+    <div class="roadmap-step" onclick="showJourney('b2broker')">
+        <div class="roadmap-icon">🔗</div>
+        <div class="roadmap-title">Digital Asset Operations</div>
+        <div class="roadmap-sub">B2Broker Group</div>
+    </div>
+
+    <div class="roadmap-step" onclick="showJourney('swiftx')">
+        <div class="roadmap-icon">🛡️</div>
+        <div class="roadmap-title">Compliance & AML</div>
+        <div class="roadmap-sub">SwiftX DLT Pay</div>
+    </div>
+
+    <div class="roadmap-step" onclick="showJourney('client')">
+        <div class="roadmap-icon">⚙️</div>
+        <div class="roadmap-title">Blockchain Operations</div>
+        <div class="roadmap-sub">Client Engagement</div>
+    </div>
+
+    <div class="roadmap-step" onclick="showJourney('research')">
+        <div class="roadmap-icon">🔍</div>
+        <div class="roadmap-title">Financial Crime Intelligence</div>
+        <div class="roadmap-sub">Research & Projects</div>
+    </div>
+
+</div>
+
+<!-- EXISTING JOURNEY CARDS -->
 
     <div class="journey-flow">
 
       <!-- The Edge -->
-      <div class="j-card c5">
+      <div id="research" class="j-card c5">
         <div class="j-head">
-          <p class="j-company">🔍 The Edge &nbsp;·&nbsp; Independent Research &amp; Analytical Projects</p>
+          <p class="j-company">🔍 Financial Crime Intelligence &nbsp;·&nbsp; Independent Research &amp; Analytical Projects</p>
           <p class="j-period">2025 – Present · Ongoing</p>
           <p class="j-role">Blockchain Intelligence &amp; OSINT Research</p>
           <p class="j-summary">Applying lessons learned from banking, compliance, transaction monitoring, and digital assets to better understand attribution, risk, and behavioural patterns across blockchain ecosystems.</p>
@@ -403,7 +501,7 @@
       </div>
 
       <!-- Practical Application -->
-      <div class="j-card c4">
+      <div id="client" class="j-card c4" style="display:none;">
         <div class="j-head">
           <p class="j-company">🔗 Practical Application &nbsp;·&nbsp; Independent Client Engagement</p>
           <p class="j-period">Feb 2026 – Apr 2026 · 3 Months</p>
@@ -428,9 +526,9 @@
       </div>
 
       <!-- The Shift -->
-      <div class="j-card c3">
+      <div id="swiftx" class="j-card c3" style="display:none;">
         <div class="j-head">
-          <p class="j-company">🛡️ The Shift &nbsp;·&nbsp; SwiftX DLT Pay</p>
+          <p class="j-company">🛡️ Compliance & AML &nbsp;·&nbsp; SwiftX DLT Pay</p>
           <p class="j-period">May 2025 – Feb 2026</p>
           <p class="j-role">Compliance &amp; Finance Operations Analyst</p>
           <p class="j-summary">Moved into dedicated AML and compliance operations within a digital asset environment, working across onboarding, due diligence, transaction monitoring, regulatory audits, and digital asset risk reviews.</p>
@@ -455,7 +553,7 @@
       </div>
 
       <!-- The Bridge -->
-      <div class="j-card c2">
+      <div id="b2broker" class="j-card c2" style="display:none;">
         <div class="j-head">
           <p class="j-company">🔗 The Bridge &nbsp;·&nbsp; B2Broker Group</p>
           <p class="j-period">Oct 2022 – May 2025</p>
@@ -481,7 +579,7 @@
       </div>
 
       <!-- The Foundation -->
-      <div class="j-card c1">
+      <div id="unity" class="j-card c1" style="display:none;">
         <div class="j-head">
           <p class="j-company">🏦 The Foundation &nbsp;·&nbsp; Unity Consulting Services</p>
           <p class="j-period">Jan 2014 – Oct 2022</p>
@@ -802,6 +900,16 @@
 <footer>
   <div class="wrap">© 2026 Divya Balakrishnan · Blockchain Analysis · Compliance · OSINT</div>
 </footer>
+<script>
+function showJourney(id) {
 
+  document.querySelectorAll('.j-card').forEach(card => {
+    card.style.display = 'none';
+  });
+
+  document.getElementById(id).style.display = 'block';
+
+}
+</script>
 </body>
 </html>
